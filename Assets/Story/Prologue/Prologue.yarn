@@ -12,4 +12,27 @@ Aunt: Jade, congratulations on your graduation. I think it's time to let you kno
     Aunt: Yes. They used to run a shop down (some street name) street. Maybe you could find out more there.
 -> Why do you tell me now?
     Aunt: I think it's about time for you to know the truth. They used to run a shop down (some street name) street. Maybe you could find out more there.
+
+Jade: Memory shop?
+
+Jade arrives at Memory shop. Using the key her aunt gave her, she unlocks the door.
+
+Jade: Cough, cough...
+
+Jade looks around
+
+Jade: Wow.
+
+Something caught her eyes. 
+
+It was an antique phone. However, its design looks different.
+
+Jade: What is this? It looks like a phone, but what is with that opening?
+
+Jade: Should I try dialing it?
+-> Try dialing phone
+    Nothing happened.
+    Jade: Hmm... Maybe I need to find something to put in that opening.
+-> Look around
+    Jade: Maybe I should look around for more clues first.
 ===
