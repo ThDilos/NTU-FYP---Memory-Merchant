@@ -8,6 +8,7 @@ Aunt: Jade, congratulations on your graduation. I think it's time to let you kno
 
 Aunt: Haven't you been curious about them since you were young?
 
+<<portrait Character_Image Jade_0>>
 -> About my parents?
     Aunt: Yes. They used to run a shop down some street. Maybe you could find out more there.
 -> Why do you tell me now?
@@ -16,6 +17,10 @@ Aunt: Haven't you been curious about them since you were young?
 
 Jade: Memory shop?
 
+<<fadeOut FadeOverlay>>
+<<wait 1>>
+<<fadeIn FadeOverlay>>
+<<wait 1>>
 Jade arrives at Memory shop.
 
 Jade: Cough, cough...

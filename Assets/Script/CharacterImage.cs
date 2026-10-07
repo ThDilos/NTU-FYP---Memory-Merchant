@@ -5,10 +5,20 @@ using Yarn.Unity;
 
 public class CharacterImage : MonoBehaviour
 {
+    [Header("UI Reference")]
+    public Image characterImage;
+
+    [Header("Character Sprites")]
+    public List<Sprite> characterImages;
+
+    [Header("Yarn")]
+    public DialogueRunner dialogueRunner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        characterImage.gameObject.SetActive(false);
+        characterImage.enabled = false;
+
+        dialogueRunner.onDialogueComplete.AddListener(HidePortrait);
     }
 
     // Update is called once per frame
@@ -17,28 +27,48 @@ public class CharacterImage : MonoBehaviour
         
     }
 
-    [Header("UI Reference")]
-    public Image characterImage;
+    void OnDestroy()
+    {
+        if (dialogueRunner != null)
+        {
+            dialogueRunner.onDialogueComplete.RemoveListener(HidePortrait);
+        }
+    }
 
-    [Header("Character Sprites")]
-    public List<Sprite> characterImages;
+    void HidePortrait()
+    {
+        characterImage.enabled = false;
+    }
 
     [YarnCommand("portrait")]
     public void ChangePortrait(string spriteName)
     {
-        Sprite targetSprite = characterImages.Find(s => s.name.ToLower() == spriteName.ToLower());
+        Sprite targetSprite = null;
 
-        if(targetSprite != null )
+        foreach (Sprite sprite in characterImages)
         {
-            characterImage.gameObject.SetActive(true);
+            if (sprite.name.ToLower() == spriteName.ToLower())
+            {
+                targetSprite = sprite;
+                break;
+            }
+        }
+
+        if (targetSprite != null)
+        {
+            characterImage.enabled = true;
             characterImage.sprite = targetSprite;
-        }else if(spriteName.ToLower() == "none" ||  spriteName.ToLower() == "hide")
+        }
+        else if (spriteName.ToLower() == "none" ||
+                 spriteName.ToLower() == "hide")
         {
-            characterImage.gameObject.SetActive(false);
+            characterImage.enabled = false;
         }
         else
         {
-            Debug.LogWarning($"Portrait sprite '{spriteName}' not found in the characterImage list!");
+            Debug.LogWarning(
+                $"Portrait sprite '{spriteName}' not found in the Expressions list!"
+            );
         }
     }
 
