@@ -8,6 +8,9 @@ public class FadeOverlay : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Image fadeImage;
 
+    //[SerializeField] private GameObject fadeObject;
+    public float fadeDuration = 2f;
+
     private static FadeOverlay instance;
 
     private void Awake()
@@ -18,17 +21,17 @@ public class FadeOverlay : MonoBehaviour
     [YarnCommand("fadeOut")]
     public void FadeOut()
     {
-        StartCoroutine(Fade(0f, 1f, 1f));
+        StartCoroutine(Fade(0f, 1f));
     }
 
     [YarnCommand("fadeIn")]
     public void FadeIn()
     {
-        StartCoroutine(Fade(1f, 0f, 1f));
+        StartCoroutine(Fade(1f, 0f));
     }
     void Start()
     {
-        
+        SetAlpha(0f);
     }
 
     // Update is called once per frame
@@ -37,24 +40,27 @@ public class FadeOverlay : MonoBehaviour
         
     }
 
-    private IEnumerator Fade(float startAlpha, float endAlpha, float duration)
+    IEnumerator Fade(float startAlpha, float endAlpha)
     {
-        float time = 0f;
-        Color color = fadeImage.color;
+        float elapsed = 0f;
 
-        while(time < duration)
+        while(elapsed < fadeDuration)
         {
-            time += Time.deltaTime;
+            elapsed += Time.deltaTime;
 
-            float alpha = Mathf.Lerp(startAlpha, endAlpha, time/duration);
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed/fadeDuration);
 
-            color.a = alpha;
-            fadeImage.color = color;
+            SetAlpha(alpha);
 
             yield return null;
         }
+    }
 
-        color.a = endAlpha;
+    void SetAlpha(float alpha)
+    {
+        Color color = fadeImage.color;
+        color.a = alpha;
         fadeImage.color = color;
+
     }
 }

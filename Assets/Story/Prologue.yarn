@@ -18,9 +18,9 @@ Aunt: Haven't you been curious about them since you were young?
 Jade: Memory shop?
 
 <<fadeOut FadeOverlay>>
-<<wait 1>>
+<<wait 2>>
 <<fadeIn FadeOverlay>>
-<<wait 1>>
+<<wait 2>>
 Jade arrives at Memory shop.
 
 Jade: Cough, cough...
