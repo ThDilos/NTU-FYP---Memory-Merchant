@@ -1,0 +1,39 @@
+﻿title: Prologue
+---
+On xxxx, NTU graduation day...
+
+Aunt: Happy graduation. Say cheese!
+
+Aunt: Jade, congratulations on your graduation. I think it's time to let you know something about your parents.
+
+Aunt: Haven't you been curious about them since you were young?
+
+<<portrait Character_Image Jade_0>>
+-> About my parents?
+    Aunt: Yes. They used to run a shop down some street. Maybe you could find out more there.
+-> Why do you tell me now?
+    Aunt: I think it's about time for you to know the truth. They used to run a shop down some street. 
+    Aunt: Maybe you could find out more there.
+
+Jade: Memory shop?
+
+<<fadeOut FadeOverlay>>
+<<wait 2>>
+<<fadeIn FadeOverlay>>
+<<wait 2>>
+Jade arrives at Memory shop.
+
+Jade: Cough, cough...
+
+Jade: Wow.
+
+Jade: What is this? It looks like a phone, but what is with that opening?
+
+Jade: Should I try dialing it?
+
+-> Try dialing phone
+    Nothing happened.
+    Jade: Hmm... Maybe I need to find something to put in that opening.
+-> Look around
+    Jade: Maybe I should look around for more clues first.
+===
