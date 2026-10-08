@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: e4233f713dfcfbb4b8eec804abfc9a93
+guid: 392faa6bdfe9d654397e320f5576e4af
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9131638763529326363
-    second: FYP memory world tutorial 3_0
+      213: 2309958487815599496
+    second: memory shop sprite-Sheet_0
   - first:
-      213: -5816772032395944174
-    second: FYP memory world tutorial 3_1
+      213: 3755264013660503509
+    second: memory shop sprite-Sheet_1
+  - first:
+      213: -8085279229212294879
+    second: memory shop sprite-Sheet_2
+  - first:
+      213: -4815340416554944591
+    second: memory shop sprite-Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,13 +55,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.4315962, y: 0.76986676}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 263, y: 128, z: 348, w: 30}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -105,13 +111,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FYP memory world tutorial 3_0
+      name: memory shop sprite-Sheet_0
       rect:
         serializedVersion: 2
-        x: 262
-        y: 127
-        width: 11
-        height: 13
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,20 +126,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b1f4a5de2191abe70800000000000000
-      internalID: 9131638763529326363
+      spriteID: 885b528810f9e0020800000000000000
+      internalID: 2309958487815599496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FYP memory world tutorial 3_1
+      name: memory shop sprite-Sheet_1
       rect:
         serializedVersion: 2
-        x: 265
-        y: 139
-        width: 6
-        height: 12
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,8 +148,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 21fdc95b7aca64fa0800000000000000
-      internalID: -5816772032395944174
+      spriteID: 5ddba0469b06d1430800000000000000
+      internalID: 3755264013660503509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: memory shop sprite-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12105f0f0615bcf80800000000000000
+      internalID: -8085279229212294879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: memory shop sprite-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b739a667697c2db0800000000000000
+      internalID: -4815340416554944591
       vertices: []
       indices: 
       edges: []
@@ -152,18 +202,22 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 62c415c7734d1a444b7667b0ecb7964b
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      FYP memory world tutorial 3_0: 9131638763529326363
-      FYP memory world tutorial 3_1: -5816772032395944174
+      memory shop sprite-Sheet_0: 2309958487815599496
+      memory shop sprite-Sheet_1: 3755264013660503509
+      memory shop sprite-Sheet_2: -8085279229212294879
+      memory shop sprite-Sheet_3: -4815340416554944591
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
