@@ -3,11 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Yarn.Unity;
-
+/*
 public class VisualBehaviour : MonoBehaviour
 {
     private DialogueRunner DialogueRunner;
-    private FadeOverlay fadeOverlay;
+    //private FadeOverlay fadeOverlay;
 
     private void Awake()
     {
@@ -38,3 +38,4 @@ public class VisualBehaviour : MonoBehaviour
         return StartCoroutine(fadeOverlay.FadeOut(time));
     }
 }
+*/

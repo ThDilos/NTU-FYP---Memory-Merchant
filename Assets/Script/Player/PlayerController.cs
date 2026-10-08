@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float walkSpeed = 50f;
     [SerializeField] private float runSpeed = 80f;
 
+    [Header("Camera")]
+    [SerializeField] private Camera camera;
+
     // Runtime vars
     private InputAction movementActionInput;
     private InputAction runningActionInput;
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        HandleCamera();
     }
 
     private void HandleMovement()
@@ -59,5 +63,10 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = movementInput * speed * Time.deltaTime * 100;
 
         //if (movementInput.magnitude < 0.1f) rb.linearVelocity = Vector2.zero; // Force Stop if no input
+    }
+
+    private void HandleCamera()
+    {
+        if (camera == false) return;
     }
 }
