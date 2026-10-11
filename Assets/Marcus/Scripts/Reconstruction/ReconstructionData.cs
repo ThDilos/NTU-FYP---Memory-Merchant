@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "ReconstructionData", menuName = "Scriptable Objects/ReconstructionData")]
+
 public class ReconstructionData : ScriptableObject
 {
     public string reconstructionId;
@@ -25,7 +26,5 @@ public class ReconstructionSlotData
 public class ReconstructionFragmentData
 {
     public string fragmentId;
-
-    [TextArea]
-    public string fragmentText;
+    public Sprite fragmentImage;
 }

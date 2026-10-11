@@ -8,6 +8,7 @@ Takes photo of Jade graduating.
 
 Aunt: Jade, congratulations on your graduation. I think it's time to let you know something about your parents. Haven't you been curious about them since you were young?
 
+<<portrait Character_Image JadeSmile_0>>
 -> About my parents?
     Aunt: Yes. They used to run a shop down (some street name) street. Maybe you could find out more there.
 -> Why do you tell me now?
@@ -15,6 +16,10 @@ Aunt: Jade, congratulations on your graduation. I think it's time to let you kno
 
 Jade: Memory shop?
 
+<<fadeOut Fade>>
+<<wait 2>>
+<<fadeIn Fade>>
+<<wait 2>>
 Jade arrives at Memory shop. Using the key her aunt gave her, she unlocks the door.
 
 Jade: Cough, cough...

@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.EventSystems;
 
 public class ReconstructionSlot : MonoBehaviour, IDropHandler
@@ -17,7 +16,6 @@ public class ReconstructionSlot : MonoBehaviour, IDropHandler
     }
 
     public string slotID;
-    public TMP_Text answerText;
 
     public string CorrectFragmentID
     {
@@ -35,40 +33,42 @@ public class ReconstructionSlot : MonoBehaviour, IDropHandler
         CorrectFragmentID = data.correctFragementID;
 
         AssignedFragmentID = "";
-        answerText.text = "";
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        FragmentInput fragment = eventData.pointerDrag?.GetComponent<FragmentInput>();
 
-        if (fragment != null)
-        {
-            return;
-        }
+        if (IsFilled) return;
 
-        if (IsFilled)
-        {
-            return;
-        }
+        DraggableFragment fragment =
+            eventData.pointerDrag?.GetComponent<DraggableFragment>();
 
-        AssignedFragmentID = fragment.FragmentID;
-        answerText.text = GetFragmentText(fragment);
+        if (fragment == null) return;
 
-        fragment.transform.SetParent(transform, false );
+        AssignedFragmentId = fragment.FragmentId;
 
-        RectTransform fragmentRect = fragment.GetComponent<RectTransform>();
+        // Place the image inside the slot.
+        fragment.transform.SetParent(transform, false);
 
-        fragmentRect.anchoredPosition = Vector2.zero;
-    }
+        RectTransform rect =
+            fragment.GetComponent<RectTransform>();
 
-    private string GetFragmentText(FragmentInput fragment)
-    {
-        return fragment.GetComponentInChildren<TMP_Text>().text;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        rect.localScale = Vector3.one;
+
+        fragment.SetPlacedInSlot(this);
     }
 
     public bool IsCorrect()
     {
         return IsFilled && AssignedFragmentID == CorrectFragmentID;
+    }
+
+    public void ClearSlot()
+    {
+        AssignedFragmentId = "";
     }
 }

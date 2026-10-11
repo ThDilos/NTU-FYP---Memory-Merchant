@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class FragmentInput : MonoBehaviour, IBeginDragHandler, IEndDragHandler//, IDragHandler
+public class FragmentInput : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,21 +21,30 @@ public class FragmentInput : MonoBehaviour, IBeginDragHandler, IEndDragHandler//
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
+
     private Transform originalParent;
     private Vector2 originalPosition;
+    private ReconstructionSlot currentSlot;
 
     public string FragmentID => fragmentID;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponent<Canvas>();
-        canvasGroup = GetComponent<CanvasGroup>();
 
-        if(canvasGroup != null )
-        {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        }
+
+        canvas = GetComponentInParent<Canvas>();
+    }
+    public void Setup(string id, Sprite sprite)
+    {
+        fragmentId = id;
+
+        Image image = GetComponentInChildren<Image>();
+        if (image != null)
+            image.sprite = sprite;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -45,16 +55,28 @@ public class FragmentInput : MonoBehaviour, IBeginDragHandler, IEndDragHandler//
         canvasGroup.blocksRaycasts = false;
 
         transform.SetParent(canvas.transform, true);
+        currentSlot = null;
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        rectTransform.anchoredPosition +=
+            eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
 
-        if(transform.parent == canvas.transform)
+        // If no slot accepted it, restore its position.
+        if (currentSlot == null)
         {
             transform.SetParent(originalParent, false);
             rectTransform.anchoredPosition = originalPosition;
         }
+    }
+
+    public void SetPlacedInSlot(ReconstructionSlot slot)
+    {
+        currentSlot = slot;
     }
 }
