@@ -40,12 +40,12 @@ public class ReconstructionSlot : MonoBehaviour, IDropHandler
 
         if (IsFilled) return;
 
-        DraggableFragment fragment =
-            eventData.pointerDrag?.GetComponent<DraggableFragment>();
+        FragmentInput fragment =
+            eventData.pointerDrag?.GetComponent<FragmentInput>();
 
         if (fragment == null) return;
 
-        AssignedFragmentId = fragment.FragmentId;
+        AssignedFragmentID = fragment.fragmentID;
 
         // Place the image inside the slot.
         fragment.transform.SetParent(transform, false);
@@ -69,6 +69,6 @@ public class ReconstructionSlot : MonoBehaviour, IDropHandler
 
     public void ClearSlot()
     {
-        AssignedFragmentId = "";
+        AssignedFragmentID = "";
     }
 }

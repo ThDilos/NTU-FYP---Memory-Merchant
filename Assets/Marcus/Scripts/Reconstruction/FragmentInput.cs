@@ -40,7 +40,7 @@ public class FragmentInput : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     }
     public void Setup(string id, Sprite sprite)
     {
-        fragmentId = id;
+        fragmentID = id;
 
         Image image = GetComponentInChildren<Image>();
         if (image != null)
