@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
     {
         // Activate all fogs on start
         foggedRooms.ToList().ForEach(foggedRoom => foggedRoom.Value.ForEach(fog => fog.SetActive(true)));
+
+        if (LevelInventory.Instance != null) LevelInventory.Instance.Initialize(); 
     }
     public void UnlockRoom(string roomName)
     {

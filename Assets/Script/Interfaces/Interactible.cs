@@ -6,19 +6,29 @@ using UnityEngine;
 public class Interactible : MonoBehaviour
 {
     [Header("Basic interactible settings")]
-    [SerializeField] private bool alwaysInteractible = true;
-    [Description("Offsetting the marker from object center. By default directly up.")]
+    [SerializeField] protected bool initiallyInteractible = true;
+    [Tooltip("Offsetting the marker from object center. By default directly up.")]
     public Vector2 interactionMarkerOffset = Vector2.up * 1.0f;
-    [Description("The words on the interaction marker")]
+    [Tooltip("The words on the interaction marker")]
     public string interactionPrompt = "Interact";
+    [Tooltip("Text if it's not interactible")]
+    public string unabletoInteractPrompt = "Nuh uh";
 
     [Header("Highlight Effect")]
-    [Description("Glowing effect that's always visible? Add the glowing effect into highLightSFX. Will be spawned once [isHighlighted] becomes true.\nAnd destroyed if it becomes false.")]
+    [Tooltip("Glowing effect that's always visible? Add the glowing effect into highLightSFX. Will be spawned once [isHighlighted] becomes true.\nAnd destroyed if it becomes false.")]
     public bool isHighlighted = false;
     [SerializeField] private GameObject highLightSFX;
 
     // Runtime vars
     private GameObject spawnedHighLightSFX;
+    private bool interactible;
+    public bool IsInteractable { get { return interactible; } }
+
+    protected void Start()
+    {
+        interactible = initiallyInteractible;
+    }
+
     protected void Update()
     {
         if (spawnedHighLightSFX == null)
@@ -34,20 +44,14 @@ public class Interactible : MonoBehaviour
         }
     }
 
-    public virtual bool IsInteractable { get
-        {
-            if (!alwaysInteractible) 
-            {
-                Debug.LogError("[Interactible] Method \"Interactable\" needs to be overriden!");
-                return false;
-            }
-            return true;
-        }
-    }
-
     public virtual void Interact()
     {
         Debug.Log($"[Interactible] {gameObject.name} was interacted.\nBut nothing happened since \"Interact\" method needs to be overriden.");
         return;
+    }
+
+    public void SetInteractable(bool input)
+    {
+        interactible = input;
     }
 }

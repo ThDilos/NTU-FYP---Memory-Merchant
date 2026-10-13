@@ -112,7 +112,14 @@ public class Interactor : MonoBehaviour
 
         if (markerText != null)
         {
-            markerText.text = $"[{interact.GetBindingDisplayString(InputBinding.DisplayStringOptions.IgnoreBindingOverrides)}] {interactible.interactionPrompt}";
+            // This include an option for Controller
+            string interactKeys = interact.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+            string[] slicedKey = interactKeys.Split("|");
+            string displayKey = slicedKey[0]; // First string
+            if (Gamepad.all.Count > 0 && slicedKey.Length > 1) displayKey = slicedKey[1];
+
+            if (interactible.IsInteractable) markerText.text = $"[{displayKey.Trim()}] {interactible.interactionPrompt}";
+            else markerText.text = interactible.unabletoInteractPrompt;
         }
     }
 

@@ -9,5 +9,5 @@ public class MemoryFragment : Collectible
         PLACE
     }
 
-
+    
 }

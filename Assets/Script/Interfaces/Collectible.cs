@@ -5,11 +5,13 @@ public class Collectible : Interactible
 {
     [Header("Display")]
     [SerializeField] protected string displayName;
-    public string DisplayName { get; }
+    public string DisplayName { get { return displayName; } }
     [SerializeField] protected Sprite sprite;
-    public string Sprite { get; }
-    [SerializeField] protected bool collectable;
-    public bool Collectable { get; }
+    public Sprite Sprite { get { return sprite; } }
+    public override void Interact()
+    {
+        Collect();
+    }
 
     public virtual void Collect()
     {

@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 4465717463608378704}
   - component: {fileID: 2924639105830752624}
   m_Layer: 5
-  m_Name: InteractMarkerCanvas
+  m_Name: WorldSpaceCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,6 +430,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: b5f389ddb7daa3f4bb14d6d08d4f09be, type: 3}
   walkSpeed: 4
   runSpeed: 7
+  camera: {fileID: 0}
 --- !u!50 &3313181612021870137
 Rigidbody2D:
   serializedVersion: 5
