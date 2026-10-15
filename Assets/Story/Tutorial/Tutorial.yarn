@@ -1,13 +1,12 @@
 ﻿title: Tutorial
 ---
-<<portrait Character_Image JadeSmile_0>>
+
 Jade: Ei?! What’s going on?
 
 Jade: I am still in the shop. But it looks slightly different.
 
 ?: Detecting… beep…beep… Inside practice memory world. 
 
-<<portrait CharacterImage Jade(shocked)>>
 Jade: Who’ s that?!
 
 Mem(appears): Welcome young memory restorer, I am Mem, your memory assistant.
@@ -63,7 +62,9 @@ Mem: You have completed the reconstruction. Let’s enter the study to find more
 
 ===
 
-title: study
+title: MotherFragment
 ---
+
+Jade: It looks like a photo of Mother.
 
 ===

@@ -36,7 +36,7 @@ public class TutorialMemoryCompletionController : MonoBehaviour
         }
         dialogueBlocker.SetActive(false);
         resultsPanel.SetActive(false);
-        dialogueRunner.autoStart = false;
+        //dialogueRunner.autoStart = false;
         foreach (Canvas canvas in dialogueRunner.GetComponentsInChildren<Canvas>(true))
             canvas.sortingOrder = 150;
         continueButton.onClick = new Button.ButtonClickedEvent();
