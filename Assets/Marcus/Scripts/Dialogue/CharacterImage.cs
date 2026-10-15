@@ -15,6 +15,11 @@ public class CharacterImage : MonoBehaviour
     public DialogueRunner dialogueRunner;
     void Awake()
     {
+        if (characterImage != null)
+        {
+            characterImage.preserveAspect = true;
+            characterImage.raycastTarget = false;
+        }
         HidePortrait();
     }
 
