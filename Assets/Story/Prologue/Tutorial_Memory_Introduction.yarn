@@ -1,10 +1,20 @@
 title: Tutorial_Memory_Introduction
 ---
-// Shu Wen: edit these opening lines to add the tutorial's story and context.
+// Shu Wen: the story opening lives in Assets/Marcus/Scripts/Story/Tutorial/Tutorial.yarn.
 // This node starts on the first Memory World visit of a new game.
-// Keep Mother's ending in Tutorial_Mother_Message; do not add memory_complete here.
+// Mother's Study dialogue is a separate node below; do not add memory_complete to this opening node.
+<<detour Tutorial>>
 You have entered the Memory World. Echoes of the past can help restore what has been lost. #line:tutorial_intro_001
 Move with WASD or the arrow keys. Hold E near the cabinet key to reveal its Echo. #line:tutorial_intro_002
 Release E, then hold E again to capture the Echo. Hold 1 near the locked cabinet to replay it. #line:tutorial_intro_003
 Collect the memory fragments, then open the Manual with R to reconstruct the memory. Your objective will guide you. #line:tutorial_intro_004
+===
+
+title: Tutorial_Mother_Message
+---
+// Starts after restoring and entering the Study. Edit Mother's approved dialogue here.
+Mother: Placeholder: Mother's message begins here. #line:tutorial_mother_001
+Mother: Placeholder: Add Mother's next line here. #line:tutorial_mother_002
+Mother: Placeholder: Add Mother's final line here. #line:tutorial_mother_003
+<<memory_complete>>
 ===

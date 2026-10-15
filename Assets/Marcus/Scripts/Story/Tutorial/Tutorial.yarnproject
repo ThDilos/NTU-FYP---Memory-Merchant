@@ -1,0 +1,20 @@
+{
+    "projectFileVersion":  4,
+    "sourceFiles":  [
+                        "**/*.yarn",
+                        "../../../../Story/Prologue/Tutorial_*.yarn"
+                    ],
+    "excludeFiles":  [
+                         "**/*~/*",
+                         "./Samples/Yarn Spinner*/*"
+                     ],
+    "localisation":  {
+
+                     },
+    "baseLanguage":  "en",
+    "compilerOptions":  {
+                            "diagnosticsSeverity":  {
+
+                                                    }
+                        }
+}

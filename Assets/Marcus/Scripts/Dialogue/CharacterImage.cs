@@ -82,4 +82,22 @@ public class CharacterImage : MonoBehaviour
         }
     }
 
+    public void TestPortrait()
+    {
+        Debug.Log("Testing character portrait");
+
+        gameObject.SetActive(true);
+
+        if (characterImage != null)
+        {
+            characterImage.gameObject.SetActive(true);
+            characterImage.enabled = true;
+            characterImage.color = Color.white;
+        }
+        else
+        {
+            Debug.LogError("Character Portrait Image is not assigned!");
+        }
+    }
+
 }

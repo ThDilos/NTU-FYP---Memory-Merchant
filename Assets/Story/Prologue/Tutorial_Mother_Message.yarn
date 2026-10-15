@@ -1,8 +1,0 @@
-title: Tutorial_Mother_Message
----
-// Editable placeholders. Replace these lines when the Mother's message is approved.
-Mother: Placeholder: Mother's message begins here. #line:tutorial_mother_001
-Mother: Placeholder: Add Mother's next line here. #line:tutorial_mother_002
-Mother: Placeholder: Add Mother's final line here. #line:tutorial_mother_003
-<<memory_complete>>
-===
