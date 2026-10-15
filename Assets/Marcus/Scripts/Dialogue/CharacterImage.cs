@@ -77,7 +77,7 @@ public class CharacterImage : MonoBehaviour
         else
         {
             Debug.LogWarning(
-                $"Portrait sprite '{spriteName}' not found in the Expressions list!"
+                $"Portrait sprite '{spriteName}' not found in the Portrait list!"
             );
         }
     }
