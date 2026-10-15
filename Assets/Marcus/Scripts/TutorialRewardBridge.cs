@@ -9,12 +9,15 @@ public static class TutorialRewardBridge
     public static int Coins { get; private set; }
     public static bool TutorialCompleted { get; private set; }
     public static bool IsArchiveReplay { get; private set; }
+    public static bool MemoryWorldIntroSeen { get; private set; }
+    public static void MarkMemoryWorldIntroSeen() => MemoryWorldIntroSeen = true;
     private static bool returnToArchives;
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetSession()
     {
         MemoryPoints = 0; Coins = 0; TutorialCompleted = false;
         IsArchiveReplay = false; returnToArchives = false;
+        MemoryWorldIntroSeen = false;
     }
     public static void BeginNewGame()
     {
@@ -25,6 +28,7 @@ public static class TutorialRewardBridge
     {
         if (!TutorialProgressSave.TryLoad(out TutorialProgressSave.Record record)) return false;
         TutorialCompleted = record.tutorialCompleted;
+        MemoryWorldIntroSeen = record.tutorialCompleted;
         MemoryPoints = record.memoryPoints;
         Coins = record.coins;
         IsArchiveReplay = false; returnToArchives = false;

@@ -33,17 +33,20 @@ public class LevelInventory : MonoBehaviour
 
     public void Collect(Collectible collectible)
     {
-        if (collectible is MemoryEcho)
+        if (collectible == null) return;
+        if (collectible is MemoryEcho echo)
         {
+            if (memoryEchoes.Contains(echo)) return;
             if (memoryEchoes.Count >= EchoSlotCount)
             {
                 // At this stage, remove the first echo. Later can introduce replace function
                 memoryEchoes.RemoveAt(0);
             }
-            memoryEchoes.Add((MemoryEcho)collectible);
+            memoryEchoes.Add(echo);
         }
         else if (collectible is MemoryFragment)
         {
+            if (memoryFragments.Contains((MemoryFragment)collectible)) return;
             memoryFragments.Add((MemoryFragment)collectible);
         }
 

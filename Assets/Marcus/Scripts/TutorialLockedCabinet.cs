@@ -10,10 +10,12 @@ public class TutorialLockedCabinet : MemoryEcho
     [SerializeField] private float useRange = 0.25f;
     [Header("Editable cabinet Echo replay")]
     [SerializeField] private TutorialMemoryEcho keyEcho;
+    [Tooltip("Unlock pose shown during replay, before the cabinet opens.")]
     [SerializeField] private UnityEngine.Sprite replayPlaceholderSprite;
     [SerializeField] private float replayDuration = 1f;
+    [SerializeField] private UnityEngine.Events.UnityEvent replayCompleted = new UnityEngine.Events.UnityEvent();
     private readonly CabinetEchoReplay replay = new CabinetEchoReplay();
-    private GameObject replayImage;
+    private EchoReplayVisual replayImage;
     private Coroutine replayRoutine;
     [SerializeField] private float useHoldDuration = 0.4f;
     private float holdElapsed;
@@ -68,32 +70,16 @@ public class TutorialLockedCabinet : MemoryEcho
     private IEnumerator PlayCabinetReplay()
     {
         if (replayImage == null)
-        {
-            replayImage = EchoPlaceholderVisual.Create(transform, "Cabinet_Key_Echo_Replay",
-                replayPlaceholderSprite != null ? replayPlaceholderSprite : EchoPlaceholderVisual.Square);
-        }
-        Vector3 origin = interactionArea != null
-            ? transform.InverseTransformPoint(interactionArea.bounds.center) : Vector3.zero;
-        origin += Vector3.up * 0.18f;
-        replayImage.transform.localPosition = origin;
-        replayImage.SetActive(true);
-        yield return EchoPlaceholderVisual.Fade(replayImage, 0f, 0.85f, 0.3f, () => Blocked);
-        float elapsed = 0f;
-        while (elapsed < Mathf.Max(0.1f, replayDuration))
-        {
-            if (!Blocked)
-            {
-                elapsed += Time.deltaTime;
-            }
-            yield return null;
-        }
-        yield return EchoPlaceholderVisual.Fade(replayImage, 0.85f, 0f, 0.3f, () => Blocked);
+            replayImage = CreateReplayVisual("Cabinet_Key_Echo_Replay", replayPlaceholderSprite);
+        Vector3 origin = interactionArea != null ? interactionArea.bounds.center : transform.position;
+        origin += Vector3.down * 0.1f;
+        yield return PlayReplayVisual(replayImage, origin, replayDuration, () => Blocked);
         while (Blocked) yield return null;
         replayRoutine = null;
-        replayImage.SetActive(false);
         if (!state.EchoStored(0) || !replay.Finish()) { replay.Reset(); yield break; }
         visuals.OpenCabinet();
         state.DiscoverEcho(1);
+        replayCompleted.Invoke();
     }
 
     public void ResetReplay()
@@ -102,9 +88,9 @@ public class TutorialLockedCabinet : MemoryEcho
         replayRoutine = null;
         replay.Reset();
         holdElapsed = 0f; holdTriggered = false;
-        if (replayImage != null) replayImage.SetActive(false);
+        if (replayImage != null) replayImage.ResetVisual();
     }
-    private void OnDisable() => ResetReplay();
+    protected override void OnDisable() { base.OnDisable(); ResetReplay(); }
     // Interact shows the instruction; only the dedicated 1 input replays the stored Echo.
     public override void Interact() { }
 }

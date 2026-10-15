@@ -5,16 +5,15 @@ public class Collectible : Interactible
 {
     [Header("Display")]
     [SerializeField] protected string displayName;
-    public string DisplayName { get; }
+    public string DisplayName => displayName;
     [SerializeField] protected Sprite sprite;
-    public string Sprite { get; }
+    public Sprite Sprite => sprite;
     [SerializeField] protected bool collectable;
-    public bool Collectable { get; }
+    public bool Collectable => collectable;
 
     public virtual void Collect()
     {
         if (LevelInventory.Instance != null) LevelInventory.Instance.Collect(this);
-        OnCollect();
     }
 
     public virtual void OnCollect()

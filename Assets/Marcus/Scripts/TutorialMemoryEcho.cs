@@ -7,18 +7,19 @@ public class TutorialMemoryEcho : MemoryEcho
     [SerializeField] private TutorialMemoryState state;
     [SerializeField] private TutorialUIController tutorialUI;
     [SerializeField] private int echoIndex;
-    [Header("Editable placeholder preview")]
+    [Header("Key Echo visual")]
+    [Tooltip("Sprite shown when revealing the key Echo; fades out after capture.")]
     [SerializeField] private UnityEngine.Sprite previewSprite;
     [SerializeField] private float previewDuration = 0.3f;
     [SerializeField] private float captureHoldDuration = 0.4f;
     private readonly KeyEchoSequence sequence = new KeyEchoSequence();
-    private GameObject preview;
+    private EchoReplayVisual preview;
     private Coroutine animationRoutine;
     private Interactor player;
     private float heldTime;
     private bool waitForRelease;
     public bool CanCapture => sequence.Current == KeyEchoSequence.Phase.ReadyToCapture && !IsStored;
-    public UnityEngine.Sprite ReplayImage => previewSprite != null ? previewSprite : EchoPlaceholderVisual.Square;
+    public UnityEngine.Sprite ReplayImage => previewSprite != null ? previewSprite : FallbackSprite;
     public override string InteractionHint => IsStored ? "Echo stored" : "Hold E";
     public override Vector2 InteractionMarkerPosition => (Vector2)GetComponent<Collider2D>().bounds.center + Vector2.up * 0.22f + interactionMarkerOffset;
     private bool Blocked => Time.timeScale <= 0f || (tutorialUI != null && (tutorialUI.ExternalInputBlocked ||
@@ -50,10 +51,10 @@ public class TutorialMemoryEcho : MemoryEcho
     }
     private IEnumerator PlayPreview()
     {
-        if (preview == null) preview = EchoPlaceholderVisual.Create(transform, "Key_Echo_Preview", ReplayImage);
-        preview.transform.localPosition = transform.InverseTransformPoint(GetComponent<Collider2D>().bounds.center) + Vector3.up * 0.05f;
-        preview.SetActive(true);
-        yield return EchoPlaceholderVisual.Fade(preview, 0f, 0.85f, previewDuration, () => Blocked);
+        if (preview == null) preview = CreateReplayVisual("Key_Echo_Preview", ReplayImage);
+        preview.RevealAt(GetComponent<Collider2D>().bounds.center + Vector3.down * 0.2f);
+
+        yield return preview.FadeTo(0.85f, previewDuration, () => Blocked);
         sequence.FinishPreview(); waitForRelease = true; animationRoutine = null;
     }
     public override void OnCollect()
@@ -66,8 +67,8 @@ public class TutorialMemoryEcho : MemoryEcho
     {
         if (preview != null)
         {
-            yield return EchoPlaceholderVisual.Fade(preview, 0.85f, 0f, previewDuration, () => Blocked);
-            preview.SetActive(false);
+            yield return preview.FadeTo(0f, previewDuration, () => Blocked);
+            preview.ResetVisual();
         }
         animationRoutine = null;
     }
@@ -75,39 +76,12 @@ public class TutorialMemoryEcho : MemoryEcho
     {
         if (animationRoutine != null) StopCoroutine(animationRoutine);
         animationRoutine = null; sequence.Reset(); heldTime = 0f; waitForRelease = true;
-        if (preview != null) preview.SetActive(false);
+        if (preview != null) preview.ResetVisual();
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         if (animationRoutine != null || sequence.Current == KeyEchoSequence.Phase.Playing) ResetPreview();
-        else if (preview != null) preview.SetActive(false);
-    }
-}
-
-internal static class EchoPlaceholderVisual
-{
-    private static UnityEngine.Sprite square;
-    public static UnityEngine.Sprite Square => square != null ? square : square = UnityEngine.Sprite.Create(Texture2D.whiteTexture,
-        new Rect(0, 0, Texture2D.whiteTexture.width, Texture2D.whiteTexture.height), new Vector2(0.5f, 0.5f), Texture2D.whiteTexture.width / 0.18f);
-    public static GameObject Create(Transform parent, string name, UnityEngine.Sprite sprite)
-    {
-        GameObject go = new GameObject(name); go.transform.SetParent(parent, false);
-        SpriteRenderer image = go.AddComponent<SpriteRenderer>(); image.sprite = sprite; image.sortingOrder = 20;
-        image.color = new Color(0.8f, 0.95f, 1f, 0f); return go;
-    }
-    public static IEnumerator Fade(GameObject go, float from, float to, float duration, System.Func<bool> blocked)
-    {
-        SpriteRenderer image = go.GetComponent<SpriteRenderer>(); float elapsed = 0f;
-        image.color = new Color(0.8f, 0.95f, 1f, from);
-        while (elapsed < Mathf.Max(0.01f, duration))
-        {
-            if (!blocked())
-            {
-                elapsed += Time.deltaTime;
-                image.color = new Color(0.8f, 0.95f, 1f, Mathf.Lerp(from, to, elapsed / Mathf.Max(0.01f, duration)));
-            }
-            yield return null;
-        }
-        image.color = new Color(0.8f, 0.95f, 1f, to);
+        else if (preview != null) preview.ResetVisual();
     }
 }

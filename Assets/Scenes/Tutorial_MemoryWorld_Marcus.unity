@@ -3300,14 +3300,14 @@ MonoBehaviour:
   interactionPrompt: Interact with cabinet key
   isHighlighted: 0
   highLightSFX: {fileID: 0}
-  displayName: 
-  sprite: {fileID: 0}
+  displayName: Cabinet Key Echo
+  sprite: {fileID: 21300000, guid: f809146fb15e8504381d173219dc713c, type: 3}
   collectable: 0
   echoReplay: {fileID: 0}
   state: {fileID: 7000000006}
   tutorialUI: {fileID: 1234489787}
   echoIndex: 0
-  previewSprite: {fileID: 0}
+  previewSprite: {fileID: 21300000, guid: f809146fb15e8504381d173219dc713c, type: 3}
   previewDuration: 0.3
   captureHoldDuration: 0.4
 --- !u!114 &7000000201
@@ -3327,8 +3327,8 @@ MonoBehaviour:
   interactionPrompt: Locked - capture the Key Echo first
   isHighlighted: 0
   highLightSFX: {fileID: 0}
-  displayName: 
-  sprite: {fileID: 0}
+  displayName: Cabinet unlock action
+  sprite: {fileID: 21300000, guid: 4817102ebc5402b4ea930ba487928c13, type: 3}
   collectable: 0
   echoReplay: {fileID: 0}
   state: {fileID: 7000000006}
@@ -3336,7 +3336,7 @@ MonoBehaviour:
   tutorialUI: {fileID: 1234489787}
   useRange: 0.25
   keyEcho: {fileID: 7000000200}
-  replayPlaceholderSprite: {fileID: 0}
+  replayPlaceholderSprite: {fileID: 21300000, guid: 4817102ebc5402b4ea930ba487928c13, type: 3}
   replayDuration: 1
   useHoldDuration: 0.4
 --- !u!61 &7000000301
@@ -8894,7 +8894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.60, g: 0.38, b: 0.17, a: 1}
+  m_Color: {r: 0.6, g: 0.38, b: 0.17, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11776,7 +11776,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.08804777}
   m_SpriteTilingProperty:
     border: {x: 2.6299999, y: 1.28, z: 3.48, w: 0.29999998}
     pivot: {x: 0.4315962, y: 0.76986676}
@@ -11786,7 +11786,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.63, y: 0.26}
+  m_Size: {x: 0.63, y: 0.43609554}
   m_EdgeRadius: 0
 --- !u!1 &9002001220
 GameObject:
@@ -12603,6 +12603,7 @@ MonoBehaviour:
   gameplayInputAssets:
   - {fileID: -944628639613478452, guid: 3e19bc320d87f714caafa6df40a8c898, type: 3}
   motherNode: Tutorial_Mother_Message
+  openingNode: Tutorial_Memory_Introduction
   dialogueBlocker: {fileID: 9204000010}
   resultsPanel: {fileID: 9204000020}
   continueButton: {fileID: 9204000084}
@@ -13926,7 +13927,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.58, g: 0.35, b: 0.16, a: 1}
@@ -14014,10 +14015,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13, g: 0.10, b: 0.06, a: 1}
+  m_Color: {r: 0.13, g: 0.1, b: 0.06, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14089,7 +14090,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.43, g: 0.29, b: 0.15, a: 1}
@@ -14164,7 +14165,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.18, g: 0.135, b: 0.08, a: 1}
@@ -14239,7 +14240,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.26, g: 0.18, b: 0.095, a: 1}
@@ -14314,7 +14315,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.18, g: 0.135, b: 0.08, a: 1}
@@ -14389,7 +14390,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14399,7 +14400,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Switch between windowed and fullscreen."
+  m_text: Switch between windowed and fullscreen.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14526,7 +14527,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.43, g: 0.29, b: 0.15, a: 1}
@@ -14601,7 +14602,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14611,7 +14612,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Your preferences are saved automatically."
+  m_text: Your preferences are saved automatically.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14738,7 +14739,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14748,7 +14749,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Audio & Display"
+  m_text: Audio & Display
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14875,7 +14876,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
@@ -14950,7 +14951,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.08, g: 0.06, b: 0.035, a: 1}
@@ -14980,7 +14981,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c0630c1b6c347a4bb9786ac11000007, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsPanelLayout
   window: {fileID: 9601000001}
   viewportPadding: 48

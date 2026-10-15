@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,8 @@ public class TutorialMemoryCompletionController : MonoBehaviour
     [SerializeField] private TutorialUIController tutorialUI;
     [SerializeField] private InputActionAsset[] gameplayInputAssets;
     [SerializeField] private string motherNode = "Tutorial_Mother_Message";
+    [Header("First visit instructions (editable Yarn node)")]
+    [SerializeField] private string openingNode = "Tutorial_Memory_Introduction";
     [SerializeField] private GameObject dialogueBlocker;
     [SerializeField] private GameObject resultsPanel;
     [SerializeField] private Button continueButton;
@@ -24,6 +27,7 @@ public class TutorialMemoryCompletionController : MonoBehaviour
     private readonly GameplayInputPause inputLock = new GameplayInputPause();
     private bool lockHeld;
     private bool previousUIBlock;
+    private bool openingDialogue;
     private void Awake()
     {
         Image blockerImage = dialogueBlocker.GetComponent<Image>();
@@ -36,6 +40,7 @@ public class TutorialMemoryCompletionController : MonoBehaviour
         }
         dialogueBlocker.SetActive(false);
         resultsPanel.SetActive(false);
+        // This runner hosts two nodes. Explicit starts choose opening vs restored Study dialogue.
         dialogueRunner.autoStart = false;
         foreach (Canvas canvas in dialogueRunner.GetComponentsInChildren<Canvas>(true))
             canvas.sortingOrder = 150;
@@ -46,6 +51,38 @@ public class TutorialMemoryCompletionController : MonoBehaviour
             ? "Memory Points   +0 (Replay)" : "Memory Points   +3";
         if (coinsText != null) coinsText.text = "Coins   +0";
         if (continueLabel != null) continueLabel.text = TutorialRewardBridge.IsArchiveReplay ? "Back to Archives" : "Continue";
+    }
+    private IEnumerator Start()
+    {
+        // Wait until all scene Start methods have set up the player and presenters.
+        yield return null;
+        if (TutorialRewardBridge.MemoryWorldIntroSeen || TutorialRewardBridge.TutorialCompleted ||
+            TutorialRewardBridge.IsArchiveReplay || string.IsNullOrWhiteSpace(openingNode)) yield break;
+        while (dialogueRunner.IsDialogueRunning || GameplayBlocked()) yield return null;
+        if (!HasNode(openingNode))
+        {
+            Debug.LogWarning("Opening tutorial dialogue node is missing: " + openingNode, this);
+            yield break;
+        }
+        openingDialogue = true;
+        CaptureGameplay();
+        RunOpeningMessage();
+    }
+    private bool GameplayBlocked() => Time.timeScale <= 0f ||
+        (tutorialUI != null && (tutorialUI.ExternalInputBlocked ||
+        (tutorialUI.manualPanel != null && tutorialUI.manualPanel.activeSelf) ||
+        (tutorialUI.settingsPanel != null && tutorialUI.settingsPanel.activeSelf)));
+    private bool HasNode(string node) => dialogueRunner.YarnProject != null &&
+        dialogueRunner.YarnProject.Program != null && Array.IndexOf(dialogueRunner.YarnProject.NodeNames, node) >= 0;
+    private async void RunOpeningMessage()
+    {
+        try { await dialogueRunner.StartDialogue(openingNode); }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception, this);
+            openingDialogue = false;
+            ReleaseGameplay();
+        }
     }
     private void OnEnable()
     {
@@ -63,17 +100,19 @@ public class TutorialMemoryCompletionController : MonoBehaviour
     }
     public bool TryBeginMotherMessage()
     {
-        if (state == null || !state.StudyRestored || dialogueRunner.IsDialogueRunning || Time.timeScale <= 0f ||
-            (tutorialUI != null && (tutorialUI.ExternalInputBlocked ||
-            (tutorialUI.manualPanel != null && tutorialUI.manualPanel.activeSelf) ||
-            (tutorialUI.settingsPanel != null && tutorialUI.settingsPanel.activeSelf)))) return false;
-        if (dialogueRunner.YarnProject == null || dialogueRunner.YarnProject.Program == null ||
-            Array.IndexOf(dialogueRunner.YarnProject.NodeNames, motherNode) < 0)
+        if (state == null || !state.StudyRestored || openingDialogue || dialogueRunner.IsDialogueRunning || GameplayBlocked()) return false;
+        if (!HasNode(motherNode))
         {
             Debug.LogError("Mother dialogue node is missing from the existing Yarn project: " + motherNode, this);
             return false;
         }
         if (!sequence.TryBegin(state.StudyRestored)) return false;
+        CaptureGameplay();
+        RunMotherMessage();
+        return true;
+    }
+    private void CaptureGameplay()
+    {
         if (tutorialUI != null)
         {
             previousUIBlock = tutorialUI.ExternalInputBlocked;
@@ -83,8 +122,6 @@ public class TutorialMemoryCompletionController : MonoBehaviour
         inputLock.Capture(gameplayInputAssets, pauseTime: false, suspendDialogueInput: false);
         lockHeld = true;
         dialogueBlocker.SetActive(true);
-        RunMotherMessage();
-        return true;
     }
     private async void RunMotherMessage()
     {
@@ -98,6 +135,13 @@ public class TutorialMemoryCompletionController : MonoBehaviour
     private void RequestMemoryComplete() => sequence.RequestCompletion();
     private void OnMotherDialogueFinished()
     {
+        if (openingDialogue)
+        {
+            openingDialogue = false;
+            TutorialRewardBridge.MarkMemoryWorldIntroSeen();
+            ReleaseGameplay();
+            return;
+        }
         // The final command arms completion. Yarn's real completion event shows results after presenters finish.
         if (sequence.FinishDialogue())
         {
