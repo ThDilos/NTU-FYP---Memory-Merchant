@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class TutorialVisualStateController : MonoBehaviour
 {
+    [SerializeField] private TutorialMemoryState memoryState;
     [Header("Cabinet")]
     public GameObject openCabinetWithRecorder;
     public GameObject recorderFragment;
@@ -16,6 +17,7 @@ public class TutorialVisualStateController : MonoBehaviour
 
     [Header("Study")]
     public GameObject studyFog;
+    public bool StudyRestored { get; private set; }
 
     void Start()
     {
@@ -24,60 +26,14 @@ public class TutorialVisualStateController : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current == null)
-            return;
-
-        // KEY 1 - Collect Mother Fragment
-        if (Keyboard.current.digit1Key.wasPressedThisFrame ||
-            Keyboard.current.numpad1Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 1: Mother fragment collected");
-            CollectMotherFragment();
-        }
-
-        // KEY 2 - Open Cabinet
-        if (Keyboard.current.digit2Key.wasPressedThisFrame ||
-            Keyboard.current.numpad2Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 2: Cabinet opened");
-            OpenCabinet();
-        }
-
-        // KEY 3 - Collect Recorder Fragment
-        if (Keyboard.current.digit3Key.wasPressedThisFrame ||
-            Keyboard.current.numpad3Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 3: Recorder fragment collected");
-            CollectRecorderFragment();
-        }
-
-        // KEY 4 - Collect Study Fragment
-        if (Keyboard.current.digit4Key.wasPressedThisFrame ||
-            Keyboard.current.numpad4Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 4: Study fragment collected");
-            CollectStudyFragment();
-        }
-
-        // KEY 5 - Restore Study
-        if (Keyboard.current.digit5Key.wasPressedThisFrame ||
-            Keyboard.current.numpad5Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 5: Study restored");
-            RestoreStudy();
-        }
-
-        // KEY 6 - Reset Everything
-        if (Keyboard.current.digit6Key.wasPressedThisFrame ||
-            Keyboard.current.numpad6Key.wasPressedThisFrame)
-        {
-            Debug.Log("KEY 6: Reset visuals");
+        // Editor reset aid; key 1 is reserved for using the stored Key Echo.
+        if (Keyboard.current != null &&
+            (Keyboard.current.digit6Key.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame))
             ResetVisuals();
-        }
     }
-
     public void OpenCabinet()
     {
+
         // Show the open cabinet + recorder artwork
         openCabinetWithRecorder.SetActive(true);
 
@@ -90,26 +46,33 @@ public class TutorialVisualStateController : MonoBehaviour
 
     public void CollectMotherFragment()
     {
+        if (memoryState != null) memoryState.CollectFragment(0);
         motherFragment.SetActive(false);
     }
 
     public void CollectRecorderFragment()
     {
+        if (recorderFragment == null || !recorderFragment.activeSelf) return;
+        if (memoryState != null) memoryState.CollectFragment(1);
         recorderFragment.SetActive(false);
     }
 
     public void CollectStudyFragment()
     {
+        if (memoryState != null) memoryState.CollectFragment(2);
         studyFragment.SetActive(false);
     }
 
     public void RestoreStudy()
     {
+        StudyRestored = true;
         studyFog.SetActive(false);
     }
 
     public void ResetVisuals()
     {
+        StudyRestored = false;
+        if (memoryState != null) memoryState.ResetProgress();
         // Cabinet starts closed
         openCabinetWithRecorder.SetActive(false);
 

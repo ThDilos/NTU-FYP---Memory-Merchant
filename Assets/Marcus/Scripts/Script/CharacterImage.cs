@@ -13,41 +13,56 @@ public class CharacterImage : MonoBehaviour
 
     [Header("Yarn")]
     public DialogueRunner dialogueRunner;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        HidePortrait();
+    }
+
     void Start()
     {
-        characterImage.enabled = false;
-
-        dialogueRunner.onDialogueComplete.AddListener(HidePortrait);
+        if (dialogueRunner != null)
+        {
+            dialogueRunner.onDialogueStart.AddListener(HidePortrait);
+            dialogueRunner.onDialogueComplete.AddListener(HidePortrait);
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        if (dialogueRunner == null || !dialogueRunner.IsDialogueRunning) HidePortrait();
     }
 
     void OnDestroy()
     {
         if (dialogueRunner != null)
         {
+            dialogueRunner.onDialogueStart.RemoveListener(HidePortrait);
             dialogueRunner.onDialogueComplete.RemoveListener(HidePortrait);
         }
     }
 
     void HidePortrait()
     {
-        characterImage.enabled = false;
+        if (characterImage != null) characterImage.enabled = false;
     }
 
     [YarnCommand("portrait")]
     public void ChangePortrait(string spriteName)
     {
+        if (characterImage == null) return;
+        if (dialogueRunner == null || !dialogueRunner.IsDialogueRunning ||
+            string.Equals(spriteName, "none", System.StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(spriteName, "hide", System.StringComparison.OrdinalIgnoreCase))
+        {
+            HidePortrait();
+            return;
+        }
         Sprite targetSprite = null;
 
-        foreach (Sprite sprite in characterImages)
+        if (characterImages != null) foreach (Sprite sprite in characterImages)
         {
-            if (sprite.name.ToLower() == spriteName.ToLower())
+            if (sprite != null && string.Equals(sprite.name, spriteName, System.StringComparison.OrdinalIgnoreCase))
             {
                 targetSprite = sprite;
                 break;
@@ -58,11 +73,6 @@ public class CharacterImage : MonoBehaviour
         {
             characterImage.enabled = true;
             characterImage.sprite = targetSprite;
-        }
-        else if (spriteName.ToLower() == "none" ||
-                 spriteName.ToLower() == "hide")
-        {
-            characterImage.enabled = false;
         }
         else
         {

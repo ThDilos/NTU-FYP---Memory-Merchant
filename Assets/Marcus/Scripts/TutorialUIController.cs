@@ -6,16 +6,19 @@ public class TutorialUIController : MonoBehaviour
     [Header("Panels")]
     public GameObject manualPanel;
     public GameObject settingsPanel;
+    [Tooltip("Disable when another scene controller already handles Q / R / Escape.")]
+    public bool handleKeyboardInput = true;
+    public bool ExternalInputBlocked { get; set; }
 
     void Start()
     {
-        manualPanel.SetActive(false);
-        settingsPanel.SetActive(false);
+        MemoryWorldSettingsController.ApplySavedPreferences();
+        CloseAllPanels();
     }
 
     void Update()
     {
-        if (Keyboard.current == null)
+        if (ExternalInputBlocked || !handleKeyboardInput || Keyboard.current == null)
             return;
 
         // Q = open / close Settings
@@ -39,53 +42,51 @@ public class TutorialUIController : MonoBehaviour
 
     public void ToggleManual()
     {
-        bool isOpen = manualPanel.activeSelf;
-
-        manualPanel.SetActive(!isOpen);
-
-        if (!isOpen)
-        {
-            settingsPanel.SetActive(false);
-        }
+        if (ExternalInputBlocked) return;
+        if (manualPanel == null) return;
+        if (manualPanel.activeSelf) CloseManual();
+        else OpenManual();
     }
 
     public void ToggleSettings()
     {
-        bool isOpen = settingsPanel.activeSelf;
-
-        settingsPanel.SetActive(!isOpen);
-
-        if (!isOpen)
-        {
-            manualPanel.SetActive(false);
-        }
+        if (ExternalInputBlocked) return;
+        if (settingsPanel == null) return;
+        if (settingsPanel.activeSelf) CloseSettings();
+        else OpenSettings();
     }
 
     public void OpenManual()
     {
+        if (ExternalInputBlocked) return;
+        CloseSettings();
+        if (manualPanel == null) return;
+        manualPanel.transform.SetAsLastSibling();
         manualPanel.SetActive(true);
-        settingsPanel.SetActive(false);
     }
 
     public void CloseManual()
     {
-        manualPanel.SetActive(false);
+        if (manualPanel != null) manualPanel.SetActive(false);
     }
 
     public void OpenSettings()
     {
+        if (ExternalInputBlocked) return;
+        CloseManual();
+        if (settingsPanel == null) return;
+        settingsPanel.transform.SetAsLastSibling();
         settingsPanel.SetActive(true);
-        manualPanel.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        settingsPanel.SetActive(false);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
     }
 
     public void CloseAllPanels()
     {
-        manualPanel.SetActive(false);
-        settingsPanel.SetActive(false);
+        CloseManual();
+        CloseSettings();
     }
 }

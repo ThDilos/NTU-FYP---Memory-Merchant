@@ -14,6 +14,8 @@ public class Interactor : MonoBehaviour
     [SerializeField] private bool disableMarker = false;
     [SerializeField] private GameObject marker;
     [SerializeField] private TMP_Text markerText;
+    [Tooltip("Draw interaction hints above foreground scenery.")]
+    [SerializeField] private int markerSortingOrder = 30;
     [SerializeField] private string markerAnimationOnInteract = "";
 
     [Header("Interaction Setting")]
@@ -27,16 +29,27 @@ public class Interactor : MonoBehaviour
 
     void OnEnable()
     {
-        interact.Enable();
+        interact?.Enable();
     }
 
     void OnDisable()
     {
-        interact.Disable();
+        interact?.Disable();
+        if (marker != null) marker.SetActive(false);
     }
 
     void Awake()
     {
+        if (marker != null)
+        {
+            Canvas markerCanvas = marker.GetComponent<Canvas>();
+            if (markerCanvas != null)
+            {
+                markerCanvas.overrideSorting = true;
+                markerCanvas.sortingOrder = markerSortingOrder;
+            }
+        }
+
         if (inputActionAsset == null )
         {
             Debug.LogError("[Interactor] InputActionAsset is not set.");
@@ -79,12 +92,13 @@ public class Interactor : MonoBehaviour
         foreach (Collider2D col in cols)
         {
             Interactible interactible = col.GetComponent<Interactible>();
-            if (interactible == null) continue; // Should not happen, this layer mask serves specifically for interactibles
+            if (interactible == null || !interactible.IsInteractable) continue;
 
-            if (Vector2.Distance(transform.position, col.transform.position) < closestDistance)
+            float distance = Vector2.Distance(transform.position, col.ClosestPoint(transform.position));
+            if (distance < closestDistance)
             {
                 highlightedInteractible = interactible;
-                closestDistance = Vector2.Distance(transform.position, col.transform.position);
+                closestDistance = distance;
             }
         }
 
@@ -105,14 +119,13 @@ public class Interactor : MonoBehaviour
             marker.SetActive(true);
         }
 
-        Vector2 interactiblePos = interactible.transform.position;
-        Vector2 markerPosition = interactiblePos + interactible.interactionMarkerOffset;
+        Vector2 markerPosition = interactible.InteractionMarkerPosition;
         
         marker.transform.position = markerPosition;
 
         if (markerText != null)
         {
-            markerText.text = $"[{interact.GetBindingDisplayString(InputBinding.DisplayStringOptions.IgnoreBindingOverrides)}] {interactible.interactionPrompt}";
+            markerText.text = interactible.InteractionHint;
         }
     }
 

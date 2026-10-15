@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDisable()
     {
+        if (rb != null) rb.linearVelocity = Vector2.zero;
         movementActionInput.Disable();
         runningActionInput.Disable();
     }

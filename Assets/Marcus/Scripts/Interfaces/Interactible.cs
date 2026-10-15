@@ -11,6 +11,7 @@ public class Interactible : MonoBehaviour
     public Vector2 interactionMarkerOffset = Vector2.up * 1.0f;
     [Description("The words on the interaction marker")]
     public string interactionPrompt = "Interact";
+    public virtual string InteractionHint => "Hold E";
 
     [Header("Highlight Effect")]
     [Description("Glowing effect that's always visible? Add the glowing effect into highLightSFX. Will be spawned once [isHighlighted] becomes true.\nAnd destroyed if it becomes false.")]
@@ -19,6 +20,18 @@ public class Interactible : MonoBehaviour
 
     // Runtime vars
     private GameObject spawnedHighLightSFX;
+
+    public virtual Vector2 InteractionMarkerPosition
+    {
+        get
+        {
+            Collider2D area = GetComponent<Collider2D>();
+            Vector2 anchor = area != null
+                ? (Vector2)area.bounds.center + Vector2.up * area.bounds.extents.y
+                : (Vector2)transform.position;
+            return anchor + interactionMarkerOffset;
+        }
+    }
     protected void Update()
     {
         if (spawnedHighLightSFX == null)
