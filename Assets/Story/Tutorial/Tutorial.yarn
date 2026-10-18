@@ -1,6 +1,11 @@
 ﻿title: Tutorial
 ---
 
+<<fadeOut Fade>>
+<<wait 2>>
+<<fadeIn Fade>>
+<<wait 2>>
+
 Jade: Ei?! What’s going on?
 
 Jade: I am still in the shop. But it looks slightly different.
@@ -13,7 +18,9 @@ Mem(appears): Welcome young memory restorer, I am Mem, your memory assistant.
 
 Mem: Seeing that you are new to this, let me guide you through the restoration.
 
+<<cameraShift 20 0>>
 Mem: In the memory world there are forgotten areas(camera shift to fog covered study) covered in fog. 
+<<cameraReturn>>
 
 Mem: Your ultimate goal is to restore it back. 
 
@@ -68,3 +75,4 @@ title: MotherFragment
 Jade: It looks like a photo of Mother.
 
 ===
+
