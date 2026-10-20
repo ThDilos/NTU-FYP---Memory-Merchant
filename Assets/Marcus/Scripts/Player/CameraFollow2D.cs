@@ -15,6 +15,7 @@ public class CameraFollow2D : MonoBehaviour
 
     private Vector3 velocity;
 
+
     // Runtime vars
     private Transform cameraFollowTargetStore;
 

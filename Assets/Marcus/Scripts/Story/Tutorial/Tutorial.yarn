@@ -13,9 +13,12 @@ Mem(appears): Welcome young memory restorer, I am Mem, your memory assistant.
 
 Mem: Seeing that you are new to this, let me guide you through the restoration.
 
-Mem: In the memory world there are forgotten areas(camera shift to fog covered study) covered in fog. 
+<<cameraShift FogTarget>>
+Mem: In the memory world there are forgotten areascovered in fog. 
 
 Mem: Your ultimate goal is to restore it back. 
+
+<<cameraReturn>>
 
 Mem: To restore, you will need to find memory fragments and memory echoes. 
 
