@@ -15,6 +15,14 @@ public class CameraFollow2D : MonoBehaviour
 
     private Vector3 velocity;
 
+    // Runtime vars
+    private Transform cameraFollowTargetStore;
+
+    void Awake()
+    {
+        cameraFollowTargetStore = target;
+    }
+
     private void LateUpdate()
     {
         if (target == null)
@@ -34,5 +42,12 @@ public class CameraFollow2D : MonoBehaviour
                 ref velocity,
                 smoothTime
             );
+    }
+
+    // Change the focus of the camera, set to Null to follow player
+    public void CameraFocusOn(Transform target = null)
+    {
+        if (target == null) this.target = cameraFollowTargetStore;
+        else this.target = target; 
     }
 }
