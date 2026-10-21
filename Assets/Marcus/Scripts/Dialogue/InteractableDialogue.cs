@@ -1,43 +1,59 @@
+
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableDialogue : MonoBehaviour
+public class InteractableDialogue : Interactible
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Serializable]
+    public class StateDialogue
     {
-        
+        public string stateName;
+        public string nodeName;
     }
 
-    // Update is called once per frame
- 
-
+    [Header("Dialogue")]
     [SerializeField] private DialogueManager dialogueManager;
-    [SerializeField] private string nodeName;
 
-    private bool playerInRange;
+    [Header("Object State")]
+    [SerializeField] private string currentState = "Default";
 
-    private void Update()
+    [Header("State Dialogue Mapping")]
+    [SerializeField] private List<StateDialogue> stateDialogues = new();
+
+    public override void Interact()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (Time.timeScale <= 0f || dialogueManager == null)
+            return;
+
+        foreach (StateDialogue entry in stateDialogues)
         {
-            dialogueManager.StartDialogue(nodeName);
+            if (entry.stateName == currentState)
+            {
+                if (!string.IsNullOrEmpty(entry.nodeName))
+                    dialogueManager.StartDialogue(entry.nodeName);
+
+                return;
+            }
         }
+
+        Debug.LogWarning(
+            $"No dialogue configured for state '{currentState}' on {gameObject.name}."
+        );
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SetState(string newState)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-            Debug.Log("Press E to interact");
-        }
+        currentState = newState;
     }
 
-    private void OnTriggerExit(Collider other)
+    public string GetState()
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
+        return currentState;
+    }
+
+    public bool IsInState(string stateName)
+    {
+        return currentState == stateName;
     }
 }

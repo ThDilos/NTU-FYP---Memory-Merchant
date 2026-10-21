@@ -30,6 +30,8 @@ Jade: Wow.
 
 Something caught her eyes. 
 
+<<cameraShift machineTarget>>
+
 It was an antique phone. However, its design looks different.
 
 Jade: What is this? It looks like a phone, but what is with that opening?
@@ -40,4 +42,6 @@ Jade: Should I try dialing it?
     Jade: Hmm... Maybe I need to find something to put in that opening.
 -> Look around
     Jade: Maybe I should look around for more clues first.
+
+<<cameraReturn>>
 ===
