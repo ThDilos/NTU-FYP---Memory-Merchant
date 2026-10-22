@@ -16,7 +16,7 @@ public class CameraShift : MonoBehaviour
     }
 
     [YarnCommand("cameraShift")]
-    public static void ShiftCamera(string targetName)
+    public static void ShiftCamera(string targetName, float orthographicSize = 0f)
     {
         if (instance == null)
             return;
@@ -31,7 +31,7 @@ public class CameraShift : MonoBehaviour
             return;
         }
 
-        instance.cameraFollow.CameraFocusOn(targetObject.transform);
+        instance.cameraFollow.CameraFocusOn(targetObject.transform, orthographicSize);
         instance.returnOnNextLine = true;
     }
 

@@ -24,11 +24,18 @@ title: Recorder
 
 Mum: The memory machine is an asset that is passed down in our family for generations.
 
-Mem: Now you have recovered all the fragments, it is time to reconstruct.
+<<cameraShift studyFragmentTarget>>
+<<cameraKeep>>
+Mem: Next, collect the fragment near the Study.
+Mem: Hold E beside that glowing fragment to collect it.
+<<cameraReturn>>
 
-Jade: How are we going to do so?
+===
 
-Mem: Open the Manual with R to reconstruct the memory. The truth will reappear before you.
+title: Recorder_Study_Collected
+---
+// The Study fragment was collected first. The controller queues the appropriate next step.
+Mum: The memory machine is an asset that is passed down in our family for generations.
 
 ===
 
@@ -47,4 +54,51 @@ Mem: This area has not been reconstructed.
 
 Mem: Find fragments and clues to reconstruct it.
 
+===
+
+title: Tutorial_Cabinet_Locked
+---
+Mem: You can't touch or change remembered objects in the Memory World. You'll need to capture an Echo first.
+Mem: The cabinet is locked. We need the Cabinet Key Echo before we can open it.
+<<cameraShift keyEchoTarget>>
+<<cameraKeep>>
+Mem: Look at the glowing key above the fridge. Its Echo remembers an action from the past.
+Mem: Hold E near the key to reveal its Echo. Release E, then hold E again to capture it.
+<<cameraReturn>>
+===
+
+title: Tutorial_Key_Echo_Captured
+---
+Mem: You captured the Cabinet Key Echo. It is now stored in slot 1.
+<<cameraShift cabinetEchoTarget>>
+<<cameraKeep>>
+Mem: Stand beside the locked cabinet and hold 1 to replay the Echo.
+Mem: The remembered action will unlock the cabinet.
+<<cameraReturn>>
+===
+
+title: Tutorial_Cabinet_Opened
+---
+<<cameraShift cabinetEchoTarget>>
+<<cameraKeep>>
+Mem: The cabinet is open. A recorder fragment was hidden inside.
+Mem: Echoes are actions remembered by this world. Replaying the Key Echo repeated the action of unlocking the cabinet.
+Mem: Hold E beside the recorder to collect its memory fragment.
+<<cameraReturn>>
+===
+
+title: Tutorial_Reconstruction_Ready
+---
+Mem: You have collected all three memory fragments. It is time to reconstruct the memory.
+Mem: Open the Manual with R and select Reconstruction.
+Mem: Drag the words into the blanks, then choose Reconstruct. The memory will reveal the Study.
+===
+
+title: Tutorial_Find_Mother_Fragment
+---
+<<cameraShift photoTarget>>
+<<cameraKeep>>
+Mem: One fragment remains: the family photo.
+Mem: Hold E beside it to collect the Mother fragment. Then we can reconstruct the memory.
+<<cameraReturn>>
 ===

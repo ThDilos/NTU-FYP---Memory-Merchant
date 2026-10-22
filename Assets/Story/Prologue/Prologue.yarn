@@ -1,5 +1,6 @@
 ﻿title: Prologue
 ---
+<<portrait Character_Image none>>
 On xxxx, NTU graduation day...
 
 Aunt: Happy graduation. Say cheese!
@@ -10,10 +11,13 @@ Aunt: Jade, congratulations on your graduation. I think it's time to let you kno
 
 <<portrait Character_Image JadeSmile_0>>
 -> About my parents?
+    <<portrait Character_Image none>>
     Aunt: Yes. They used to run a shop down (some street name) street. Maybe you could find out more there.
 -> Why do you tell me now?
+    <<portrait Character_Image none>>
     Aunt: I think it's about time for you to know the truth. They used to run a shop down (some street name) street. Maybe you could find out more there.
 
+<<portrait Character_Image JadeSmile_0>>
 Jade: Memory shop?
 
 <<fadeOut Fade>>
@@ -30,7 +34,8 @@ Jade: Wow.
 
 Something caught her eyes. 
 
-<<cameraShift machineTarget>>
+<<cameraShift machineTarget 0.5>>
+<<cameraKeep>>
 
 It was an antique phone. However, its design looks different.
 

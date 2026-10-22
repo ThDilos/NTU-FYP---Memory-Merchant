@@ -14,8 +14,12 @@ public class MemoryWorldObjectives : MonoBehaviour
         if (state.StudyRestored) objectiveText.text = "Enter the Study";
         else if (!state.EchoStored(0) && !state.CabinetUnlocked) objectiveText.text = "Hold E at the cabinet key.\nRelease, then hold E again\nto capture its Echo.";
         else if (!state.CabinetUnlocked) objectiveText.text = "Go to the locked cabinet.\nHold 1 to use the Key Echo.";
-        else if (!state.HasFragment(0) || !state.HasFragment(1) || !state.HasFragment(2))
-            objectiveText.text = "Collect the memory fragments:\nMother, recorder and Study.";
+        else if (!state.HasFragment(1))
+            objectiveText.text = "Collect the recorder fragment\ninside the open cabinet.\nHold E to collect it.";
+        else if (!state.HasFragment(2))
+            objectiveText.text = "Find the fragment near the Study.\nHold E to collect it.";
+        else if (!state.HasFragment(0))
+            objectiveText.text = "Collect the Mother fragment\nat the family photo.\nHold E to collect it.";
         else objectiveText.text = "Open the Manual (R).\nDrag the words into the blanks\nand reconstruct the memory.";
     }
 }

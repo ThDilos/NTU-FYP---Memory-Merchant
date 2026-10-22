@@ -589,11 +589,11 @@ Transform:
   m_GameObject: {fileID: 919311104}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1844, y: 667, z: 0}
+  m_LocalPosition: {x: 0.645, y: 0.115, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1229953216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1109404637
 PrefabInstance:
@@ -725,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6153880963561626244, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6153880964328578997, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -753,8 +753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7401449457435826755, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 6153880963561626244, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6893729065063806025, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
@@ -850,7 +849,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 919311105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1350455184
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow2D
   target: {fileID: 0}
   smoothTime: 0.2
-  offset: {x: 0, y: 1}
+  offset: {x: 0, y: 0}
 --- !u!1001 &1395627151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12787,4 +12787,3 @@ SceneRoots:
   - {fileID: 1424767985}
   - {fileID: 2025611628}
   - {fileID: 1395627151}
-  - {fileID: 919311105}

@@ -19,6 +19,8 @@ public class TutorialMemoryFragment : MemoryFragment
         else if (fragmentIndex == 1) visuals.CollectRecorderFragment();
         else visuals.CollectStudyFragment();
 
-        dialogueManager.StartDialogue(nodeName);
+        if (state != null) state.QueueFragmentGuidance(fragmentIndex, nodeName, dialogueManager);
+        else if (dialogueManager != null && !string.IsNullOrWhiteSpace(nodeName))
+            dialogueManager.StartDialogue(nodeName);
     }
 }

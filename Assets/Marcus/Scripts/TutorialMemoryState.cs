@@ -23,6 +23,7 @@ public class TutorialMemoryState : MonoBehaviour
     private Coroutine alertRoutine;
     private TMP_Text alertText;
     private GameObject alertPanel;
+    private TutorialMemoryCompletionController tutorialDialogue;
     public SentenceReconstruction Reconstruction { get; private set; }
     public bool StudyRestored => Reconstruction != null && Reconstruction.Complete && visuals != null && visuals.StudyRestored;
     public bool CabinetUnlocked => visuals != null && visuals.openCabinetWithRecorder != null && visuals.openCabinetWithRecorder.activeSelf;
@@ -53,6 +54,7 @@ public class TutorialMemoryState : MonoBehaviour
         {
             LevelInventory.Instance.Collect(echoes[i]);
             ShowAlert("Echo collected: " + EchoName(i));
+            TryQueueGuidance("Tutorial_Key_Echo_Captured");
         }
         Changed?.Invoke();
     }
@@ -60,6 +62,25 @@ public class TutorialMemoryState : MonoBehaviour
     {
         if (echoes[i] != null) echoes[i].MarkDiscovered();
         Changed?.Invoke();
+        if (i == 1 && CabinetUnlocked) TryQueueGuidance("Tutorial_Cabinet_Opened");
+    }
+    public bool TryQueueGuidance(string node)
+    {
+        if (tutorialDialogue == null)
+            tutorialDialogue = FindAnyObjectByType<TutorialMemoryCompletionController>();
+        return tutorialDialogue != null && tutorialDialogue.TryQueueGuidance(node);
+    }
+    public void QueueFragmentGuidance(int index, string collectionNode, DialogueManager fallback)
+    {
+        // The recorder can be found after the Study fragment; never point at a collected object.
+        string node = index == 1 && HasFragment(2) ? "Recorder_Study_Collected" : collectionNode;
+        if (!string.IsNullOrWhiteSpace(node) && !TryQueueGuidance(node) && fallback != null)
+            fallback.StartDialogue(node);
+
+        if (HasFragment(0) && HasFragment(1) && HasFragment(2))
+            TryQueueGuidance("Tutorial_Reconstruction_Ready");
+        else if (HasFragment(1) && HasFragment(2))
+            TryQueueGuidance("Tutorial_Find_Mother_Fragment");
     }
     public void NotifyChanged() => Changed?.Invoke();
     public void RemoveKeyEcho()
@@ -118,6 +139,7 @@ public class TutorialMemoryState : MonoBehaviour
     }
     public void ResetProgress()
     {
+        if (tutorialDialogue != null) tutorialDialogue.ResetGuidance();
         collectionAlerts.Clear();
         if (alertRoutine != null) StopCoroutine(alertRoutine);
         alertRoutine = null;
