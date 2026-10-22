@@ -2,34 +2,37 @@
 ---
 <<portrait Character_Image JadeSmile_0>>
 Jade: Ei?! What’s going on?
-
+ 
 Jade: I am still in the shop. But it looks slightly different.
-
-?: Detecting… beep…beep… Inside practice memory world. 
-
+ 
+?: Detecting… beep…beep… Inside practice memory world.
+ 
 Jade: Who’ s that?!
-
+ 
 Mem(appears): Welcome young memory restorer, I am Mem, your memory assistant.
-
+ 
 Mem: Seeing that you are new to this, let me guide you through the restoration.
-
-Mem: In the memory world there are forgotten areas(camera shift to fog covered study) covered in fog. 
-
-Mem: Your ultimate goal is to restore it back. 
-
-Mem: To restore, you will need to find memory fragments and memory echoes. 
-
+ 
+<<cameraShift FogTarget>>
+Mem: In the memory world there are forgotten areas covered in fog.
+ 
+Mem: Your ultimate goal is to restore it back and unlock the story behind it.
+ 
+<<cameraReturn>>
+ 
+Mem: To restore, you will need to find memory fragments and memory echoes.
+ 
 Mem: The former will tell you more about the memory while the latter will help you in the memory world.
 
-Mem: See that shining object there. Let’s investigate.(Then walk near a fragment( the photograph)),/ 
-
-Jade: It’s a photo of a family. That child… It looks like me when I was young. 
-
-Jade: Then those 2 are my parents?
-
-Mem: press Key to collect fragments. It will tell you the memory behind it.
+<<cameraShift photoTarget>>
+Mem: See that shining object there. Let’s investigate. 
+<<cameraReturn>>
+Mem: To move around, use WASD or the arrow keys.
+Mem: When you are near a fragment, hold the E key to capture it. 
+Mem: Now you’ve gotten the basics. Let’s go.
 
 ===
+
 
 title: Step2
 ---
