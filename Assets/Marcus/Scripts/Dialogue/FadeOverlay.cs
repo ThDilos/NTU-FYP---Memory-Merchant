@@ -16,6 +16,7 @@ public class FadeOverlay : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        SetAlpha(0f);
     }
 
     [YarnCommand("fadeOut")]
@@ -43,6 +44,7 @@ public class FadeOverlay : MonoBehaviour
     IEnumerator Fade(float startAlpha, float endAlpha)
     {
         float elapsed = 0f;
+        SetAlpha(startAlpha);
 
         while(elapsed < fadeDuration)
         {
@@ -54,13 +56,19 @@ public class FadeOverlay : MonoBehaviour
 
             yield return null;
         }
+
+        SetAlpha(endAlpha);
     }
 
     void SetAlpha(float alpha)
     {
+        if (fadeImage == null) return;
         Color color = fadeImage.color;
         color.a = alpha;
         fadeImage.color = color;
-
+        // A transparent fade must let pointer events reach the shop's draggable manual.
+        fadeImage.raycastTarget = alpha > 0f;
+        CanvasGroup group = fadeImage.GetComponent<CanvasGroup>();
+        if (group != null) group.blocksRaycasts = alpha > 0f;
     }
 }

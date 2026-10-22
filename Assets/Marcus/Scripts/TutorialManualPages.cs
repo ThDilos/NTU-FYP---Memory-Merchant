@@ -1,4 +1,3 @@
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +17,25 @@ public class TutorialManualPages : MonoBehaviour
     [SerializeField] private string[] wordLabels = { "Mother", "recorder", "Study" };
     [SerializeField] private string firstConnector = "used the";
     [SerializeField] private string secondConnector = "in the";
+    [Header("Reconstruction artwork")]
+    [SerializeField] private Sprite reconstructionBoardArtwork;
     private string feedback = "";
     private Button removeEchoButton;
     private TMP_Text[] echoSlotLabels;
     private Image[] echoSlotCards;
     private LevelInventory echoInventory;
+    private Image[] blankFrames;
+    private TMP_Text[] poolGhostLabels;
+    private TMP_Text fragmentProgress;
+    private TMP_Text boardProgress;
+    private TMP_Text reconstructLabel;
+    private static readonly Color BoardInk = new Color(0.25f, 0.15f, 0.08f);
+    private static readonly Color MutedInk = new Color(0.47f, 0.32f, 0.19f);
+    private static readonly Color FrameInk = new Color(0.36f, 0.21f, 0.10f);
+    private static readonly Color RestoredInk = new Color(0.22f, 0.36f, 0.21f);
     public RectTransform DragRoot { get; private set; }
-    private readonly Vector2[] slotPositions = { new Vector2(-495, 110), new Vector2(-165, 110), new Vector2(-330, 0) };
-    private readonly Vector2[] poolPositions = { new Vector2(-495, -175), new Vector2(-320, -175), new Vector2(-155, -175) };
+    private readonly Vector2[] slotPositions = { new Vector2(-505, 80), new Vector2(-155, 80), new Vector2(-315, -20) };
+    private readonly Vector2[] poolPositions = { new Vector2(-495, -221), new Vector2(-320, -221), new Vector2(-145, -221) };
     private void Awake()
     {
         BuildBoard();
@@ -117,56 +127,133 @@ public class TutorialManualPages : MonoBehaviour
             echoSlotCards[i].color = unlocked ? new Color(0.75f, 0.52f, 0.34f, 0.35f) : new Color(0.38f, 0.29f, 0.20f, 0.35f);
         }
     }
-    private void Connector(string name, string text, Vector2 position, Vector2 size)
+    private TMP_Text BoardLabel(string name, string text, Vector2 position, Vector2 size, float fontSize,
+        TextAlignmentOptions alignment = TextAlignmentOptions.Midline, bool bold = false, RectTransform parent = null)
     {
-        TMP_Text label = Instantiate(slotTexts[0], DragRoot);
+        TMP_Text label = Instantiate(slotTexts[0], parent != null ? parent : DragRoot);
         label.gameObject.name = name;
+        label.gameObject.SetActive(true);
         Bounds(label.rectTransform, position, size);
-        label.text = text; label.fontSize = 24; label.fontStyle = FontStyles.Bold;
-        label.alignment = TextAlignmentOptions.Center; label.raycastTarget = false;
+        StyleBoardText(label, fontSize, alignment, bold);
+        label.text = text;
+        return label;
+    }
+    private static void StyleBoardText(TMP_Text label, float fontSize, TextAlignmentOptions alignment, bool bold = false)
+    {
+        label.fontSize = fontSize;
+        label.enableAutoSizing = false;
+        label.fontStyle = bold ? FontStyles.Bold : FontStyles.Normal;
+        label.alignment = alignment;
+        label.color = BoardInk;
+        label.margin = Vector4.zero;
+        label.characterSpacing = label.wordSpacing = label.lineSpacing = label.paragraphSpacing = 0;
+        label.overflowMode = TextOverflowModes.Overflow;
+        label.raycastTarget = false;
+    }
+    private Image Inset(string name, RectTransform parent, float inset, Color color)
+    {
+        Image image = Area(name, Vector2.zero, Vector2.zero, color, false, parent);
+        RectTransform rect = image.rectTransform;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.one * inset;
+        rect.offsetMax = Vector2.one * -inset;
+        return image;
+    }
+    private void StyleBoardButton(Button button, string text, Vector2 position, Vector2 size, bool primary)
+    {
+        Bounds((RectTransform)button.transform, position, size);
+        button.navigation = new Navigation { mode = Navigation.Mode.None };
+        button.transition = Selectable.Transition.ColorTint;
+        Image edge = button.GetComponent<Image>();
+        edge.sprite = null;
+        edge.color = FrameInk;
+        Image fill = Inset("Button_Face", (RectTransform)button.transform, 4,
+            primary ? RestoredInk : new Color(0.85f, 0.65f, 0.41f));
+        fill.transform.SetAsFirstSibling();
+        button.targetGraphic = fill;
+        ColorBlock colors = ColorBlock.defaultColorBlock;
+        colors.highlightedColor = new Color(1.12f, 1.10f, 1.04f);
+        colors.pressedColor = new Color(0.78f, 0.76f, 0.66f);
+        colors.disabledColor = new Color(0.64f, 0.61f, 0.53f, 0.65f);
+        colors.fadeDuration = 0.08f;
+        button.colors = colors;
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>();
+        if (label == null) return;
+        Bounds(label.rectTransform, Vector2.zero, size - new Vector2(16, 10));
+        StyleBoardText(label, primary ? 26 : 24, TextAlignmentOptions.Midline, true);
+        label.color = primary ? new Color(1f, 0.92f, 0.75f) : BoardInk;
+        label.text = text;
+        label.transform.SetAsLastSibling();
     }
     private void BuildBoard()
     {
         DragRoot = sentenceText != null ? sentenceText.transform.parent as RectTransform : null;
         if (DragRoot == null) return;
-        Area("Sentence_Board", new Vector2(-330, 65), new Vector2(500, 370), new Color(0.93f, 0.75f, 0.52f, 0.8f), false).transform.SetAsFirstSibling();
-        Area("Memory_Status_Board", new Vector2(330, 65), new Vector2(500, 370), new Color(0.93f, 0.75f, 0.52f, 0.8f), false).transform.SetAsFirstSibling();
+        Image artwork = Area("Reconstruction_Board_Artwork", Vector2.zero, new Vector2(1280, 640),
+            reconstructionBoardArtwork != null ? Color.white : new Color(0.92f, 0.76f, 0.53f), false);
+        artwork.sprite = reconstructionBoardArtwork;
+        artwork.transform.SetAsFirstSibling();
+        if (reconstructionBoardArtwork == null)
+        {
+            Area("Page_Divider", Vector2.zero, new Vector2(4, 530), new Color(0.67f, 0.45f, 0.25f, 0.45f), false);
+            Area("Fragment_Tray", new Vector2(-330, -210), new Vector2(550, 150), new Color(0.78f, 0.55f, 0.32f, 0.25f), false);
+        }
+        BoardLabel("Reconstruction_Heading", "Piece the memory together", new Vector2(-330, 270), new Vector2(540, 40), 32,
+            TextAlignmentOptions.MidlineLeft, true);
+        BoardLabel("Memory_Preview_Heading", "Your memory", new Vector2(330, 270), new Vector2(480, 40), 32,
+            TextAlignmentOptions.MidlineLeft, true);
         Transform instructions = DragRoot.Find("Reconstruction_Instructions");
         if (instructions != null)
         {
             TMP_Text label = instructions.GetComponent<TMP_Text>();
-            Bounds((RectTransform)instructions, new Vector2(-330, 205), new Vector2(460, 65));
-            label.text = "Drag the words into the blanks."; label.fontSize = 24;
+            Bounds((RectTransform)instructions, new Vector2(-330, 182), new Vector2(540, 40));
+            StyleBoardText(label, 23, TextAlignmentOptions.MidlineLeft);
+            label.color = MutedInk;
+            label.text = "Drag the fragments into the blanks.";
         }
-        Connector("Sentence_Connector_1", firstConnector, new Vector2(-330, 110), new Vector2(150, 55));
-        Connector("Sentence_Connector_2", secondConnector, new Vector2(-505, 0), new Vector2(150, 55));
-        Connector("Sentence_Punctuation", ".", new Vector2(-220, 0), new Vector2(30, 55));
+        BoardLabel("Sentence_Connector_1", firstConnector, new Vector2(-330, 80), new Vector2(145, 64), 27);
+        BoardLabel("Sentence_Connector_2", secondConnector, new Vector2(-505, -20), new Vector2(145, 64), 27);
+        BoardLabel("Sentence_Punctuation", ".", new Vector2(-205, -20), new Vector2(26, 64), 27);
+        BoardLabel("Fragment_Tray_Heading", "COLLECTED FRAGMENTS", new Vector2(-410, -161), new Vector2(340, 28), 21,
+            TextAlignmentOptions.MidlineLeft, true);
+        fragmentProgress = BoardLabel("Fragment_Count", "", new Vector2(-154, -161), new Vector2(168, 28), 20,
+            TextAlignmentOptions.MidlineRight);
+        fragmentProgress.color = MutedInk;
+        blankFrames = new Image[slotTexts.Length];
+        poolGhostLabels = new TMP_Text[fragmentButtons.Length];
         for (int i = 0; i < slotTexts.Length; i++)
         {
-            Image blank = Area("Blank_" + (i + 1), slotPositions[i], new Vector2(i == 2 ? 180 : 160, 55), new Color(0.75f, 0.52f, 0.34f), true);
+            Image blank = Area("Blank_" + (i + 1), slotPositions[i], new Vector2(178, 68), FrameInk, true);
+            blankFrames[i] = blank;
+            Inset("Blank_Paper", blank.rectTransform, 3, new Color(0.77f, 0.57f, 0.36f));
             blank.gameObject.AddComponent<ReconstructionDropSlot>().Setup(this, i);
             slotTexts[i].transform.SetParent(blank.transform, false);
-            Bounds(slotTexts[i].rectTransform, Vector2.zero, new Vector2(140, 45));
-            slotTexts[i].text = ""; slotTexts[i].raycastTarget = false;
+            Bounds(slotTexts[i].rectTransform, Vector2.zero, new Vector2(150, 48));
+            StyleBoardText(slotTexts[i], 20, TextAlignmentOptions.Midline);
+            slotTexts[i].color = new Color(0.42f, 0.27f, 0.14f, 0.65f);
+            slotTexts[i].text = (i + 1).ToString();
+
+            Area("Fragment_Tray_Place_" + i, poolPositions[i], new Vector2(164, 56),
+                new Color(0.48f, 0.30f, 0.16f, 0.18f), false);
+            poolGhostLabels[i] = BoardLabel("Fragment_Tray_Status_" + i, "Missing", poolPositions[i], new Vector2(150, 48), 20);
+            poolGhostLabels[i].color = MutedInk;
             fragmentButtons[i].onClick = new Button.ButtonClickedEvent();
-            fragmentButtons[i].navigation = new Navigation { mode = Navigation.Mode.None };
-            fragmentButtons[i].transition = Selectable.Transition.ColorTint;
-            fragmentButtons[i].image.sprite = null;
-            fragmentButtons[i].image.color = new Color(0.73f, 0.47f, 0.30f);
-            Bounds((RectTransform)fragmentButtons[i].transform, poolPositions[i], new Vector2(i == 2 ? 140 : 150, 48));
-            Bounds(fragmentTexts[i].rectTransform, Vector2.zero, new Vector2(i == 2 ? 130 : 140, 44));
-            fragmentTexts[i].fontSize = 22; fragmentTexts[i].fontStyle = FontStyles.Bold;
-            fragmentTexts[i].alignment = TextAlignmentOptions.Center; fragmentTexts[i].raycastTarget = false;
+            StyleBoardButton(fragmentButtons[i], wordLabels[i], poolPositions[i], new Vector2(164, 56), false);
+            Bounds(fragmentTexts[i].rectTransform, Vector2.zero, new Vector2(152, 48));
+            StyleBoardText(fragmentTexts[i], 25, TextAlignmentOptions.Midline, true);
             fragmentButtons[i].gameObject.AddComponent<ReconstructionWordDrag>().Setup(this, i);
         }
-        Bounds(sentenceText.rectTransform, new Vector2(330, 160), new Vector2(440, 170));
-        Bounds(statusText.rectTransform, new Vector2(330, -30), new Vector2(440, 150));
-        Bounds((RectTransform)resetButton.transform, new Vector2(330, -165), new Vector2(220, 54));
-        Bounds((RectTransform)reconstructButton.transform, new Vector2(330, -240), new Vector2(360, 60));
-        reconstructButton.image.sprite = null;
-        reconstructButton.image.color = new Color(0.20f, 0.32f, 0.17f);
-        TMP_Text reconstructLabel = reconstructButton.GetComponentInChildren<TMP_Text>();
-        if (reconstructLabel != null) reconstructLabel.color = new Color(1f, 0.91f, 0.72f);
+        Bounds(sentenceText.rectTransform, new Vector2(330, 118), new Vector2(480, 140));
+        StyleBoardText(sentenceText, 30, TextAlignmentOptions.MidlineLeft);
+        Bounds(statusText.rectTransform, new Vector2(330, -25), new Vector2(480, 105));
+        StyleBoardText(statusText, 24, TextAlignmentOptions.MidlineLeft);
+        statusText.color = MutedInk;
+        boardProgress = BoardLabel("Arrangement_Progress", "", new Vector2(330, -160), new Vector2(480, 30), 22,
+            TextAlignmentOptions.MidlineLeft, true);
+        StyleBoardButton(resetButton, "Reset", new Vector2(175, -220), new Vector2(170, 60), false);
+        StyleBoardButton(reconstructButton, "Reconstruct", new Vector2(430, -220), new Vector2(300, 60), true);
+        reconstructLabel = reconstructButton.GetComponentInChildren<TMP_Text>();
     }
     public bool CanDrag(int fragment) => state != null && DragRoot != null && DragRoot.gameObject.activeInHierarchy &&
         !state.Reconstruction.Complete && state.HasFragment(fragment);
@@ -187,6 +274,11 @@ public class TutorialManualPages : MonoBehaviour
         feedback = state.Reconstruct() ? "Memory Restored" : "The memory does not fit together.";
         RefreshBoard();
     }
+    private string WordInSlot(SentenceReconstruction model, int slot)
+    {
+        int fragment = model.Slots[slot];
+        return fragment >= 0 && fragment < wordLabels.Length ? wordLabels[fragment] : "____";
+    }
     public void RefreshBoard()
     {
         if (state == null || state.Reconstruction == null || DragRoot == null) return;
@@ -194,25 +286,39 @@ public class TutorialManualPages : MonoBehaviour
         RefreshEchoSlots();
         SentenceReconstruction model = state.Reconstruction;
         if (!model.HasAnyPlaced && !model.Complete) feedback = "";
-        StringBuilder sentence = new StringBuilder();
+        int placed = 0;
         for (int i = 0; i < model.Slots.Count; i++)
         {
-            if (i > 0) sentence.Append(" ");
-            sentence.Append(model.Slots[i] >= 0 ? state.FragmentLabel(model.Slots[i]) : "...");
-            slotTexts[i].text = "";
+            bool occupied = model.Slots[i] >= 0;
+            if (occupied) placed++;
+            slotTexts[i].text = occupied ? "" : (i + 1).ToString();
+            blankFrames[i].color = occupied ? RestoredInk : FrameInk;
         }
+        int collected = 0;
         for (int i = 0; i < fragmentButtons.Length; i++)
         {
-            fragmentButtons[i].gameObject.SetActive(state.HasFragment(i));
+            bool hasFragment = state.HasFragment(i);
+            if (hasFragment) collected++;
+            fragmentButtons[i].gameObject.SetActive(hasFragment);
             fragmentTexts[i].text = wordLabels[i];
             fragmentButtons[i].interactable = !model.Complete;
             int assigned = model.SlotOf(i);
+            poolGhostLabels[i].text = !hasFragment ? "Missing" : assigned >= 0 ? "Placed" : "";
             ((RectTransform)fragmentButtons[i].transform).anchoredPosition = assigned >= 0 ? slotPositions[assigned] : poolPositions[i];
             fragmentButtons[i].transform.SetAsLastSibling();
         }
-        sentenceText.text = "<b>Your memory</b>\n\n" + sentence + ".";
-        statusText.text = model.Complete ? "Memory Restored" : feedback.Length > 0 ? feedback : "Collect words in the world. Drag them into the blanks.";
-        statusText.fontSize = model.Complete ? 28 : 24;
+        fragmentProgress.text = collected + " / " + fragmentButtons.Length + " found";
+        boardProgress.text = model.Complete ? "MEMORY RESTORED" : placed + " / " + model.Slots.Count + " words placed";
+        boardProgress.color = model.Complete ? RestoredInk : MutedInk;
+        sentenceText.text = WordInSlot(model, 0) + " " + firstConnector + " " + WordInSlot(model, 1) + "\n" +
+            secondConnector + " " + WordInSlot(model, 2) + ".";
+        statusText.text = model.Complete ? "The Study has been restored.\nClose the Manual and enter the Study." :
+            feedback.Length > 0 ? "That order does not fit.\nTry moving the words." :
+            model.AllSlotsFilled ? "All pieces are in place.\nReconstruct to restore the memory." :
+            collected < fragmentButtons.Length ? "Find the missing fragments, then drag\neach word into a blank." :
+            "Drag a word into each blank.\nSwap words to change their order.";
+        statusText.color = model.Complete ? RestoredInk : feedback.Length > 0 ? new Color(0.55f, 0.23f, 0.13f) : MutedInk;
+        if (reconstructLabel != null) reconstructLabel.text = model.Complete ? "Restored" : "Reconstruct";
         resetButton.interactable = !model.Complete;
         reconstructButton.interactable = !model.Complete && model.AllSlotsFilled;
     }

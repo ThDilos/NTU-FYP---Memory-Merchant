@@ -9,6 +9,7 @@ public class LevelInventory : MonoBehaviour
     [SerializeField] private int echoSlotCount = 1;
     public int EchoSlotCount => Mathf.Clamp(echoSlotCount, 1, 3);
     public event Action EchoCapacityChanged;
+    public event Action EchoInventoryChanged;
 
     // Runtime vars
     public List<MemoryEcho> memoryEchoes = new List<MemoryEcho>(); 
@@ -25,11 +26,24 @@ public class LevelInventory : MonoBehaviour
         int capacity = Mathf.Clamp(echoSlotCount, 1, 3);
         if (this.echoSlotCount == capacity) return;
         this.echoSlotCount = capacity;
+        while (memoryEchoes.Count > capacity) memoryEchoes.RemoveAt(0);
         EchoCapacityChanged?.Invoke();
+        EchoInventoryChanged?.Invoke();
     }
 
     // Call this from the machine's successful upgrade event when upgrades are added.
     public void UnlockNextEchoSlot() => Initialize(EchoSlotCount + 1);
+
+    // Slot indexes are zero-based; unavailable and empty slots have no Echo.
+    public MemoryEcho GetEchoInSlot(int slotIndex) => slotIndex >= 0 && slotIndex < EchoSlotCount &&
+        slotIndex < memoryEchoes.Count ? memoryEchoes[slotIndex] : null;
+
+    public bool RemoveEcho(MemoryEcho echo)
+    {
+        if (echo == null || !memoryEchoes.Remove(echo)) return false;
+        EchoInventoryChanged?.Invoke();
+        return true;
+    }
 
     public void Collect(Collectible collectible)
     {
@@ -51,5 +65,6 @@ public class LevelInventory : MonoBehaviour
         }
 
         collectible.OnCollect();
+        if (collectible is MemoryEcho) EchoInventoryChanged?.Invoke();
     }
 }

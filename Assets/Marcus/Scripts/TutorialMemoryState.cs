@@ -65,7 +65,7 @@ public class TutorialMemoryState : MonoBehaviour
     public void RemoveKeyEcho()
     {
         if (!EchoStored(0) || LevelInventory.Instance == null) return;
-        LevelInventory.Instance.memoryEchoes.Remove(echoes[0]);
+        LevelInventory.Instance.RemoveEcho(echoes[0]);
         if (echoes[0] is TutorialMemoryEcho key) key.ResetPreview();
         Changed?.Invoke();
     }
@@ -127,7 +127,7 @@ public class TutorialMemoryState : MonoBehaviour
             if (inventory != null) inventory.memoryFragments.Remove(fragment);
         foreach (MemoryEcho echo in echoes)
         {
-            if (inventory != null) inventory.memoryEchoes.Remove(echo);
+            if (inventory != null) inventory.RemoveEcho(echo);
             if (echo != null) echo.ResetDiscovery();
             if (echo is TutorialMemoryEcho key) key.ResetPreview();
             if (echo is TutorialLockedCabinet cabinet) cabinet.ResetReplay();

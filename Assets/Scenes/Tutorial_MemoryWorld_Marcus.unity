@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 509345990}
   - component: {fileID: 7000000006}
   - component: {fileID: 7000000007}
+  - component: {fileID: 7000000008}
   m_Layer: 0
   m_Name: Tutorial_Visual_State_Controller
   m_TagString: Untagged
@@ -668,12 +669,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1097069385632700466, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
-      propertyPath: autoStart
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114346779945309275, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097069385632700466, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
+      propertyPath: autoStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1097069385632700466, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
@@ -2209,7 +2210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1468236319
 SpriteRenderer:
   serializedVersion: 3
@@ -2741,7 +2742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1940514670
 SpriteRenderer:
   serializedVersion: 3
@@ -3511,6 +3512,7 @@ MonoBehaviour:
   statusText: {fileID: 7001000632}
   resetButton: {fileID: 7001000644}
   reconstructButton: {fileID: 7001000664}
+  reconstructionBoardArtwork: {fileID: 21300000, guid: 6047e5226a9f41f4a57b000ec4010011, type: 3}
   wordLabels:
   - Mother
   - recorder
@@ -3568,6 +3570,22 @@ MonoBehaviour:
   echoSlotCount: 1
   memoryEchoes: []
   memoryFragments: []
+--- !u!114 &7000000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509345989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6047e5226a9f41f4a57b000ec4010002, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EchoInventoryDisplay
+  inventory: {fileID: 7000000007}
+  state: {fileID: 7000000006}
+  tutorialUI: {fileID: 1234489787}
+  cabinet: {fileID: 7000000201}
 --- !u!114 &7000000101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3669,6 +3687,9 @@ MonoBehaviour:
   keyEcho: {fileID: 7000000200}
   replayPlaceholderSprite: {fileID: 21300000, guid: 4817102ebc5402b4ea930ba487928c13, type: 3}
   replayDuration: 1
+  replayCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   useHoldDuration: 0.4
 --- !u!61 &7000000301
 BoxCollider2D:

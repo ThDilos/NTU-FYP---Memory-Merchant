@@ -10458,6 +10458,7 @@ GameObject:
   - component: {fileID: 9302000001}
   - component: {fileID: 9302000002}
   - component: {fileID: 9302000003}
+  - component: {fileID: 9302000004}
   m_Layer: 5
   m_Name: Shop_Upgrades_Panel
   m_TagString: Untagged
@@ -10525,6 +10526,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9302000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9302000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6047e5226a9f41f4a57b000ec4010012, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ShopUpgradePanelView
+  panelArtwork: {fileID: 21300000, guid: 6047e5226a9f41f4a57b000ec4010015, type: 3}
+  machineArtwork: {fileID: 2800000, guid: eb2492281716030409e546422d583e6a, type: 3}
+  machineUvRect:
+    serializedVersion: 2
+    x: 0.65
+    y: 0.45
+    width: 0.103125
+    height: 0.22777778
+  title: {fileID: 9302000013}
+  placeholderText: {fileID: 9302000023}
+  closeButton: {fileID: 9302000034}
 --- !u!1 &9302000010
 GameObject:
   m_ObjectHideFlags: 0
