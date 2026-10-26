@@ -13,16 +13,47 @@ title: Tutorial_Memory_Introduction
 title: Tutorial_Mother_Message
 ---
 // Starts after restoring and entering the Study. Edit Mother's approved dialogue here.
-Mother: Placeholder: Mother's message begins here. #line:tutorial_mother_001
-Mother: Placeholder: Add Mother's next line here. #line:tutorial_mother_002
-Mother: Placeholder: Add Mother's final line here. #line:tutorial_mother_003
+Father: You're here, Jade. 
+Mother: Hello, Jade. #line:tutorial_mother_001
+Jade: Father and Mother? Is it really you?
+Mother: There is so much that we want to tell you, my dear. But we don't have much time.
+Father: Our family have been memory recorders for generations.
+Mother: We see, we preserve, we remember.
+Father: If you had reached here, it means you've met Mem and completed the training.
+Mem: Master, I am confident that Jade will succeed you brilliantly
+Father: Haha! I am sure that my daughter will do well. After all, she takes after me. 
+Mother: Look at him being proud again. Well, Jade, there's still much for you to learn.
+Father: Now, now. We should get to the important part.
+Father: It's time for the succession.
+Father: My daughter, Jade, are you ready?
+-> I am not ready.
+    Mother: Dob't worry, my dear. It is alright to feel this way.
+    Mother: No one starts a journey knowing everything.
+    Mother: You just need to find the courage to take the first step, and you will know.
+    -> ... I will try my best.
+-> I am ready.
+    Father: I knew you would be.
+Father: That's my girl. Remember to say strong despite the hurdles ahead.
+Father: We will learn, grow and conquer them.
+Father: Now, then. As the 17th successor, I hereby declare you the 18th successor of the memory shop.
+Father: Mem, I will now entrust her with you. Please guide her well.
+Mem: I understand, Master. I shall guide her to the best of my ability.
+Father: Mem, Jade is now your master.
+Mother: All the best, Jade.
+Jade: Wait! I still have many things to ask you about.
+Jade: Why did you leave me? Where did you go? What happened?
+Father: We wish we could stay longer.
+Mother: ...You will need to discover it in your own time.
+Jade: Please don't go.
+Mother: Remember, my dear... Even if we are not here, we love you deeply from our heart...
+Father: You are always our pride and joy...
 <<memory_complete>>
 ===
 
 title: Recorder
 ---
 
-Mum: The memory machine is an asset that is passed down in our family for generations.
+Mother: The memory machine is an asset that is passed down in our family for generations.
 
 <<cameraShift studyFragmentTarget>>
 <<cameraKeep>>
@@ -44,6 +75,11 @@ title: FamilyPhoto
 Jade: It’s a photo of a family. That child… It looks like me when I was young.
  
 Jade: Then are those two my parents?
+
+Mem: You have succeeded in collecting your first memory fragment.
+
+<<cameraShift EchoTarget 0.75>>
+Mem: There is still echoes at the next room. Let's go.
  
 ===
 

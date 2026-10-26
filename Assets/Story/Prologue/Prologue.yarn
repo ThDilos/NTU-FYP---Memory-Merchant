@@ -19,6 +19,7 @@ Aunt: Jade, congratulations on your graduation. I think it's time to let you kno
 
 <<portrait Character_Image JadeSmile_0>>
 Jade: Memory shop?
+ <<portrait Character_Image none>>
 
 <<fadeOut Fade>>
 <<wait 2>>
@@ -26,6 +27,7 @@ Jade: Memory shop?
 <<wait 2>>
 Jade arrives at Memory shop. Using the key her aunt gave her, she unlocks the door.
 
+<<portrait Character_Image JadeSmile_0>>
 Jade: Cough, cough...
 
 Jade looks around
