@@ -19,7 +19,12 @@ public class LevelInventory : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        echoSlotCount = TutorialRewardBridge.PlayableEchoCapacity;
     }
+    private void OnEnable() => TutorialRewardBridge.Changed += RefreshPurchasedCapacity;
+    private void OnDisable() => TutorialRewardBridge.Changed -= RefreshPurchasedCapacity;
+    private void OnDestroy() { if (Instance == this) Instance = null; }
+    private void RefreshPurchasedCapacity() => Initialize(TutorialRewardBridge.PlayableEchoCapacity);
 
     public void Initialize(int echoSlotCount)
     {

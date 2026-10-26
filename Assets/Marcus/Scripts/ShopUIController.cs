@@ -248,8 +248,15 @@ public class ShopUIController : MonoBehaviour
 
     private void OnDisable()
     {
+        TutorialRewardBridge.Changed -= RefreshHUD;
         CloseUpgrades();
         PlayerPrefs.Save();
+    }
+
+    private void OnEnable()
+    {
+        TutorialRewardBridge.Changed += RefreshHUD;
+        RefreshHUD();
     }
 
     public void ReturnToStartMenu()

@@ -11,7 +11,9 @@ public class TutorialMemoryEcho : MemoryEcho
     [Tooltip("Sprite shown when revealing the key Echo; fades out after capture.")]
     [SerializeField] private UnityEngine.Sprite previewSprite;
     [Tooltip("Height of Mum's key-taking pose in world units, including sprite padding.")]
-    [SerializeField, Min(0.01f)] private float previewHeight = 0.6f;
+    [SerializeField, Min(0.01f)] private float previewHeight = 0.8f;
+    [Tooltip("World-space offset from the key interaction area to Mum's sprite pivot. Aligns the raised hand with the key and feet with the floor.")]
+    [SerializeField] private Vector2 previewOffset = new Vector2(-0.14f, -0.33f);
     [SerializeField] private float previewDuration = 0.3f;
     [SerializeField] private float captureHoldDuration = 0.4f;
     private readonly KeyEchoSequence sequence = new KeyEchoSequence();
@@ -54,7 +56,7 @@ public class TutorialMemoryEcho : MemoryEcho
     private IEnumerator PlayPreview()
     {
         if (preview == null) preview = CreateReplayVisual("Key_Echo_Preview", ReplayImage, previewHeight);
-        preview.RevealAt(GetComponent<Collider2D>().bounds.center + Vector3.down * 0.2f);
+        preview.RevealAt(GetComponent<Collider2D>().bounds.center + (Vector3)previewOffset);
 
         yield return preview.FadeTo(0.85f, previewDuration, () => Blocked);
         sequence.FinishPreview(); waitForRelease = true; animationRoutine = null;

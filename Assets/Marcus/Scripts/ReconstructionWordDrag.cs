@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(100)]
 public class ReconstructionWordDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public int FragmentIndex { get; private set; }
     private TutorialManualPages board;
     private RectTransform rect;
     private CanvasGroup group;
-    private Vector2 offset;
+    private readonly UIPointerDragPosition dragPosition = new UIPointerDragPosition();
     private bool dragging;
     private int pointer;
+    public bool IsDragging => dragging;
     public void Setup(TutorialManualPages owner, int index)
     {
         board = owner; FragmentIndex = index;
@@ -19,24 +22,24 @@ public class ReconstructionWordDrag : MonoBehaviour, IBeginDragHandler, IDragHan
     }
     public void OnBeginDrag(PointerEventData data)
     {
-        if (dragging || data.button != PointerEventData.InputButton.Left || board == null || !board.CanDrag(FragmentIndex)) return;
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(board.DragRoot, data.position, data.pressEventCamera, out Vector2 point)) return;
+        if (data.button != PointerEventData.InputButton.Left) return;
+        if (dragging && data.pointerId == pointer) CancelDrag();
+        if (dragging || board == null || !board.CanDrag(FragmentIndex)) return;
+        if (!dragPosition.Begin(rect, data)) return;
         dragging = true; pointer = data.pointerId;
-        offset = rect.anchoredPosition - point;
         group.blocksRaycasts = false;
         transform.SetAsLastSibling();
+        dragPosition.Move(data);
     }
     public void OnDrag(PointerEventData data)
     {
         if (!dragging || pointer != data.pointerId) return;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(board.DragRoot, data.position, data.pressEventCamera, out Vector2 point))
-            rect.anchoredPosition = point + offset;
+        dragPosition.Move(data);
     }
     public void OnEndDrag(PointerEventData data)
     {
         if (!dragging || pointer != data.pointerId) return;
-        dragging = false; group.blocksRaycasts = true;
-        board.RefreshBoard();
+        CancelDrag();
     }
     public void OnDrop(PointerEventData data)
     {
@@ -44,11 +47,20 @@ public class ReconstructionWordDrag : MonoBehaviour, IBeginDragHandler, IDragHan
         int slot = board != null ? board.SlotFor(FragmentIndex) : -1;
         if (slot >= 0 && word != null && word.board == board) board.DropWord(word.FragmentIndex, slot);
     }
-    private void OnDisable()
+    private void CancelDrag()
     {
         if (!dragging) return;
         dragging = false;
+        dragPosition.Clear();
         if (group != null) group.blocksRaycasts = true;
         if (board != null) board.RefreshBoard();
     }
+    private void Update()
+    {
+        if (dragging && (board == null || !board.CanDrag(FragmentIndex) ||
+            (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame))) CancelDrag();
+    }
+    private void LateUpdate() { if (dragging) dragPosition.Refresh(); }
+    private void OnDisable() => CancelDrag();
+    private void OnApplicationFocus(bool focused) { if (!focused) CancelDrag(); }
 }

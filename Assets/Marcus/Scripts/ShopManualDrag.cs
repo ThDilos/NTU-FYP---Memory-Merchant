@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // Pointer events come from the scene's existing InputSystemUIInputModule.
+[DefaultExecutionOrder(100)]
 public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private ShopUIController shopUI;
@@ -13,7 +14,7 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     private RectTransform rect;
     private Vector2 originalPosition;
-    private Vector2 grabOffset;
+    private readonly UIPointerDragPosition dragPosition = new UIPointerDragPosition();
     private bool dragging;
     private int pointerId;
 
@@ -21,13 +22,14 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (dragging || eventData.button != PointerEventData.InputButton.Left ||
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        // Recover from a release outside the Game view that never delivered EndDrag.
+        if (dragging && eventData.pointerId == pointerId) CancelDrag();
+        if (dragging ||
             shopUI == null || !shopUI.CanEnterTutorialMemoryWorld || dragSurface == null || machineDropZone == null)
             return;
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(dragSurface,
-            eventData.position, eventData.pressEventCamera, out Vector2 point)) return;
+        if (!dragPosition.Begin(rect, eventData)) return;
         originalPosition = rect.anchoredPosition;
-        grabOffset = originalPosition - point;
         pointerId = eventData.pointerId;
         dragging = true;
         OnDrag(eventData);
@@ -37,9 +39,7 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         if (!dragging || eventData.pointerId != pointerId) return;
         if (shopUI == null || shopUI.IsShopInputBlocked) { CancelDrag(); return; }
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(dragSurface,
-            eventData.position, eventData.pressEventCamera, out Vector2 point))
-            rect.anchoredPosition = point + grabOffset;
+        dragPosition.Move(eventData);
         Highlight(IsOverMachine(eventData));
     }
 
@@ -65,6 +65,7 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         if (dragging && rect != null) rect.anchoredPosition = originalPosition;
         dragging = false;
+        dragPosition.Clear();
         Highlight(false);
     }
 
@@ -74,6 +75,8 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)))
             CancelDrag();
     }
+
+    private void LateUpdate() { if (dragging) dragPosition.Refresh(); }
 
     private void OnDisable() => CancelDrag();
     private void OnApplicationFocus(bool focused) { if (!focused) CancelDrag(); }

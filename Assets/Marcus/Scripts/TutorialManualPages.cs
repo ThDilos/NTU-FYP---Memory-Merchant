@@ -33,6 +33,8 @@ public class TutorialManualPages : MonoBehaviour
     private static readonly Color MutedInk = new Color(0.47f, 0.32f, 0.19f);
     private static readonly Color FrameInk = new Color(0.36f, 0.21f, 0.10f);
     private static readonly Color RestoredInk = new Color(0.22f, 0.36f, 0.21f);
+    private static readonly Color FragmentPaper = new Color(1f, 0.95f, 0.78f);
+    private static readonly Vector2 FragmentSize = new Vector2(164, 76);
     public RectTransform DragRoot { get; private set; }
     private readonly Vector2[] slotPositions = { new Vector2(-505, 80), new Vector2(-155, 80), new Vector2(-315, -20) };
     private readonly Vector2[] poolPositions = { new Vector2(-495, -221), new Vector2(-320, -221), new Vector2(-145, -221) };
@@ -167,6 +169,11 @@ public class TutorialManualPages : MonoBehaviour
         button.transition = Selectable.Transition.ColorTint;
         Image edge = button.GetComponent<Image>();
         edge.sprite = null;
+        edge.type = Image.Type.Simple;
+        edge.preserveAspect = false;
+        edge.alphaHitTestMinimumThreshold = 0f;
+        edge.raycastTarget = true;
+        edge.raycastPadding = Vector4.zero;
         edge.color = FrameInk;
         Image fill = Inset("Button_Face", (RectTransform)button.transform, 4,
             primary ? RestoredInk : new Color(0.85f, 0.65f, 0.41f));
@@ -185,6 +192,32 @@ public class TutorialManualPages : MonoBehaviour
         label.color = primary ? new Color(1f, 0.92f, 0.75f) : BoardInk;
         label.text = text;
         label.transform.SetAsLastSibling();
+    }
+    private void StyleFragmentButton(Button button, int index)
+    {
+        StyleBoardButton(button, wordLabels[index], poolPositions[index], FragmentSize, false);
+        Image edge = button.GetComponent<Image>();
+        edge.color = new Color(0.88f, 0.64f, 0.27f);
+        // Expand the full card, including its lower edge, without overlapping neighbouring cards.
+        edge.raycastPadding = new Vector4(-4, -8, -4, -8);
+        button.targetGraphic.color = Color.white;
+        ColorBlock colors = button.colors;
+        colors.normalColor = new Color(0.13f, 0.36f, 0.32f);
+        colors.highlightedColor = new Color(0.24f, 0.55f, 0.46f);
+        colors.pressedColor = new Color(0.10f, 0.28f, 0.25f);
+        colors.selectedColor = colors.normalColor;
+        colors.disabledColor = new Color(0.37f, 0.42f, 0.34f);
+        button.colors = colors;
+        Bounds(fragmentTexts[index].rectTransform, new Vector2(9, 0), new Vector2(136, 64));
+        StyleBoardText(fragmentTexts[index], 25, TextAlignmentOptions.Midline, true);
+        fragmentTexts[index].color = FragmentPaper;
+        // A visible grip reinforces the drag affordance without intercepting pointer events.
+        for (int row = -1; row <= 1; row++)
+            for (int column = 0; column < 2; column++)
+                Area("Drag_Grip", new Vector2(-67 + column * 7, row * 8), new Vector2(3, 3),
+                    FragmentPaper, false, (RectTransform)button.transform);
+        foreach (Graphic graphic in button.GetComponentsInChildren<Graphic>(true))
+            graphic.raycastTarget = graphic == edge;
     }
     private void BuildBoard()
     {
@@ -210,7 +243,7 @@ public class TutorialManualPages : MonoBehaviour
             Bounds((RectTransform)instructions, new Vector2(-330, 182), new Vector2(540, 40));
             StyleBoardText(label, 23, TextAlignmentOptions.MidlineLeft);
             label.color = MutedInk;
-            label.text = "Drag the fragments into the blanks.";
+            label.text = "Drag the green fragments into the blanks.";
         }
         BoardLabel("Sentence_Connector_1", firstConnector, new Vector2(-330, 80), new Vector2(145, 64), 27);
         BoardLabel("Sentence_Connector_2", secondConnector, new Vector2(-505, -20), new Vector2(145, 64), 27);
@@ -224,7 +257,7 @@ public class TutorialManualPages : MonoBehaviour
         poolGhostLabels = new TMP_Text[fragmentButtons.Length];
         for (int i = 0; i < slotTexts.Length; i++)
         {
-            Image blank = Area("Blank_" + (i + 1), slotPositions[i], new Vector2(178, 68), FrameInk, true);
+            Image blank = Area("Blank_" + (i + 1), slotPositions[i], new Vector2(178, 84), FrameInk, true);
             blankFrames[i] = blank;
             Inset("Blank_Paper", blank.rectTransform, 3, new Color(0.77f, 0.57f, 0.36f));
             blank.gameObject.AddComponent<ReconstructionDropSlot>().Setup(this, i);
@@ -234,14 +267,12 @@ public class TutorialManualPages : MonoBehaviour
             slotTexts[i].color = new Color(0.42f, 0.27f, 0.14f, 0.65f);
             slotTexts[i].text = (i + 1).ToString();
 
-            Area("Fragment_Tray_Place_" + i, poolPositions[i], new Vector2(164, 56),
+            Area("Fragment_Tray_Place_" + i, poolPositions[i], FragmentSize,
                 new Color(0.48f, 0.30f, 0.16f, 0.18f), false);
             poolGhostLabels[i] = BoardLabel("Fragment_Tray_Status_" + i, "Missing", poolPositions[i], new Vector2(150, 48), 20);
             poolGhostLabels[i].color = MutedInk;
             fragmentButtons[i].onClick = new Button.ButtonClickedEvent();
-            StyleBoardButton(fragmentButtons[i], wordLabels[i], poolPositions[i], new Vector2(164, 56), false);
-            Bounds(fragmentTexts[i].rectTransform, Vector2.zero, new Vector2(152, 48));
-            StyleBoardText(fragmentTexts[i], 25, TextAlignmentOptions.Midline, true);
+            StyleFragmentButton(fragmentButtons[i], i);
             fragmentButtons[i].gameObject.AddComponent<ReconstructionWordDrag>().Setup(this, i);
         }
         Bounds(sentenceText.rectTransform, new Vector2(330, 118), new Vector2(480, 140));
@@ -295,6 +326,7 @@ public class TutorialManualPages : MonoBehaviour
             blankFrames[i].color = occupied ? RestoredInk : FrameInk;
         }
         int collected = 0;
+        Transform heldFragment = null;
         for (int i = 0; i < fragmentButtons.Length; i++)
         {
             bool hasFragment = state.HasFragment(i);
@@ -304,9 +336,14 @@ public class TutorialManualPages : MonoBehaviour
             fragmentButtons[i].interactable = !model.Complete;
             int assigned = model.SlotOf(i);
             poolGhostLabels[i].text = !hasFragment ? "Missing" : assigned >= 0 ? "Placed" : "";
-            ((RectTransform)fragmentButtons[i].transform).anchoredPosition = assigned >= 0 ? slotPositions[assigned] : poolPositions[i];
+            ReconstructionWordDrag drag = fragmentButtons[i].GetComponent<ReconstructionWordDrag>();
+            if (drag != null && drag.IsDragging)
+                heldFragment = drag.transform;
+            else
+                ((RectTransform)fragmentButtons[i].transform).anchoredPosition = assigned >= 0 ? slotPositions[assigned] : poolPositions[i];
             fragmentButtons[i].transform.SetAsLastSibling();
         }
+        if (heldFragment != null) heldFragment.SetAsLastSibling();
         fragmentProgress.text = collected + " / " + fragmentButtons.Length + " found";
         boardProgress.text = model.Complete ? "MEMORY RESTORED" : placed + " / " + model.Slots.Count + " words placed";
         boardProgress.color = model.Complete ? RestoredInk : MutedInk;

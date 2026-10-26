@@ -13,7 +13,9 @@ public class TutorialLockedCabinet : MemoryEcho
     [Tooltip("Unlock pose shown during replay, before the cabinet opens.")]
     [SerializeField] private UnityEngine.Sprite replayPlaceholderSprite;
     [Tooltip("Height of Mum's key-using pose in world units, including sprite padding.")]
-    [SerializeField, Min(0.01f)] private float replayHeight = 0.6f;
+    [SerializeField, Min(0.01f)] private float replayHeight = 0.77f;
+    [Tooltip("World-space offset from the cabinet interaction area to Mum's sprite pivot. Aligns the outstretched hand with the lock and feet with the floor.")]
+    [SerializeField] private Vector2 replayOffset = new Vector2(-0.16f, -0.07f);
     [SerializeField] private float replayDuration = 1f;
     [SerializeField] private UnityEngine.Events.UnityEvent replayCompleted = new UnityEngine.Events.UnityEvent();
     private readonly CabinetEchoReplay replay = new CabinetEchoReplay();
@@ -80,7 +82,7 @@ public class TutorialLockedCabinet : MemoryEcho
         if (replayImage == null)
             replayImage = CreateReplayVisual("Cabinet_Key_Echo_Replay", replayPlaceholderSprite, replayHeight);
         Vector3 origin = interactionArea != null ? interactionArea.bounds.center : transform.position;
-        origin += Vector3.down * 0.1f;
+        origin += (Vector3)replayOffset;
         yield return PlayReplayVisual(replayImage, origin, replayDuration, () => Blocked);
         while (Blocked) yield return null;
         replayRoutine = null;

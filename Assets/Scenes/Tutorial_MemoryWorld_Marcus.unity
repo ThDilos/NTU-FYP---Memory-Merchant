@@ -2045,12 +2045,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3757,7 +3757,8 @@ MonoBehaviour:
   tutorialUI: {fileID: 1234489787}
   echoIndex: 0
   previewSprite: {fileID: 21300000, guid: f809146fb15e8504381d173219dc713c, type: 3}
-  previewHeight: 0.6
+  previewHeight: 0.8
+  previewOffset: {x: -0.14, y: -0.33}
   previewDuration: 0.3
   captureHoldDuration: 0.4
 --- !u!114 &7000000201
@@ -3787,7 +3788,8 @@ MonoBehaviour:
   useRange: 0.25
   keyEcho: {fileID: 7000000200}
   replayPlaceholderSprite: {fileID: 21300000, guid: 4817102ebc5402b4ea930ba487928c13, type: 3}
-  replayHeight: 0.6
+  replayHeight: 0.77
+  replayOffset: {x: -0.16, y: -0.07}
   replayDuration: 1
   replayCompleted:
     m_PersistentCalls:
@@ -9596,8 +9598,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290245887
-  m_fontColor: {r: 1, g: 0.91, b: 0.72, a: 1}
+    rgba: 4278851369
+  m_fontColor: {r: 0.16, g: 0.09, b: 0.04, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9620,7 +9622,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 24
   m_fontSizeMax: 30
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -9733,8 +9735,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290245887
-  m_fontColor: {r: 1, g: 0.91, b: 0.72, a: 1}
+    rgba: 4278851369
+  m_fontColor: {r: 0.16, g: 0.09, b: 0.04, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9751,13 +9753,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 24
   m_fontSizeMax: 30
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
