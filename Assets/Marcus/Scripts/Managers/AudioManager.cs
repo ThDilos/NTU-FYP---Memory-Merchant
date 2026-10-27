@@ -1,11 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class AudioManager : MonoBehaviour
 {
+    [Serializable] private struct BackgroundMusicOnSceneLoad
+    {
+        public List<int> buildIndexes;
+        public string bgmName;
+    }
+
     public static AudioManager Instance { get; private set; }
     
     [Serializable] public class AudioData
@@ -16,7 +24,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Background Music")]
     [SerializeField] private List<AudioData> backgroundMusicList;
-    [SerializeField] private bool playBackgroundMusicOnMainMenu = true;
+    [SerializeField] private List<BackgroundMusicOnSceneLoad> backgroundMusicOnSceneLoads = new List<BackgroundMusicOnSceneLoad>();
 
     [Header("Sound Effects")]
     [SerializeField] private List<AudioData> sfxList;
@@ -65,6 +73,23 @@ public class AudioManager : MonoBehaviour
         {
             sfxDictionary[audio.name] = audio.clip;
         }
+
+        if (backgroundMusicOnSceneLoads.Count > 0) {
+            SceneManager.sceneLoaded -= PlayMusicOnSceneLoad;
+            SceneManager.sceneLoaded += PlayMusicOnSceneLoad;
+        }
+    }
+
+    private void PlayMusicOnSceneLoad(Scene scene, LoadSceneMode _)
+    {
+        backgroundMusicOnSceneLoads.ForEach(pair =>
+        {
+            if (pair.buildIndexes.Contains(scene.buildIndex))
+            {
+                PlayBackgroundMusic(pair.bgmName);
+                return;
+            }
+        });
     }
 
     public void PlayBackgroundMusic(string name)
