@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private InputAction movementActionInput;
     private InputAction runningActionInput;
     private Rigidbody2D rb;
+    public Vector2 MovementInput { get; private set; }
+    public bool IsRunning { get; private set; }
 
     // Set up actions
     void OnEnable()
@@ -30,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     void OnDisable()
     {
+        MovementInput = Vector2.zero;
+        IsRunning = false;
         if (rb != null) rb.linearVelocity = Vector2.zero;
         movementActionInput.Disable();
         runningActionInput.Disable();
@@ -54,9 +58,11 @@ public class PlayerController : MonoBehaviour
     {
         if (movementActionInput == null) return;
         Vector2 movementInput = movementActionInput.ReadValue<Vector2>();
+        MovementInput = movementInput;
+        IsRunning = runningActionInput.IsPressed();
 
         float speed = walkSpeed;
-        if (runningActionInput.IsPressed())
+        if (IsRunning)
         {
             speed = runSpeed;
         }
