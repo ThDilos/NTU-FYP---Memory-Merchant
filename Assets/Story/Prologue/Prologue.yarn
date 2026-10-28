@@ -6,9 +6,9 @@ On graduation day,...
 Graduates are gathered with their families, taking photos and celebrating.
 
 Classmate: Mum, Dad, let's take another one.
-
+<<portrait Character_Image JadeSmile_0>>
 Jade: What would it be like if they were also here?
-
+<<portrait Character_Image none>>
 Aunt: Jade! Over here!
 
 *Tsssk* *Click*
@@ -18,27 +18,27 @@ Aunt: Happy graduation! Smile at the camera. Say cheese!
 Jade smiles as her aunt took another photo.
 
 Aunt: Jade, Congratulations on your graduation. I am so proud of you.
-
+<<portrait Character_Image JadeSmile_0>>
 Jade: Thanks, Auntie. You  have been a great support all these years.
-
+<<portrait Character_Image none>>
 Aunt: Come on. That's what I should be doing. But, hmm...
-
+<<portrait Character_Image JadeSmile_0>>
 Jade: Auntie?
-
+<<portrait Character_Image none>>
 Aunt: Jade... Now that you have graduated, I think it's time to tell you about your parents.
-
+<<portrait Character_Image JadeSmile_0>>
 Jade: My parents?
-
+<<portrait Character_Image none>>
 Aunt: Haven't you been curious about them since you were young?
 
 <<portrait Character_Image JadeSmile_0>>
 -> About my parents?
-    <<portrait Character_Image none>>
     Jade: You mean... you know something about them?
+    <<portrait Character_Image none>>
     Aunt: Yes. They used to run a shop down Memory Lane. It's called the Memory Shop.
 -> Why do you tell me now?
-    <<portrait Character_Image none>>
     Jade: After all these years? Now?
+    <<portrait Character_Image none>>
     Aunt: Because I think you are old enough to decide what you want to do.
     Aunt: And my sister, your mum, told me to tell you when you are older...
     Aunt: I don't really want to keep it from you any longer.
@@ -50,11 +50,11 @@ Jade: The Memory Shop?
 Jade(thinking): Maybe I can finally find out more about them. After all these years...
 
 Jade: I will go.
-
+<<portrait Character_Image none>>
 Aunt: I can't promise that you'll find all the answers. But it will be a place to start.
 
 Aunt: Be careful, Jade.
-
+<<portrait Character_Image JadeSmile_0>>
 Jade: I will. And thank you, Auntie.
  <<portrait Character_Image none>>
 

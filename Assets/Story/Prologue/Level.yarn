@@ -10,5 +10,9 @@ Jade: Then tell me everything you know about them now.
 Mem: Ermm... You see I was asleep for many years. Some of my functions had gotten rusty.
 Mem: But the with the fragments you have collected just now, you could give me an upgrade.
 Jade: Upgrade?
+<<cameraShift upgradeTarget>>
 Mem: Upgrading me will also help you during your exploration in the memory world and help me recover some memories.
+<<cameraShift MiniGameTarget>>
+Mem: Or you could open the shop for business. 
+<<cameraReturn>>
 ===
