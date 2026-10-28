@@ -1,0 +1,18 @@
+﻿title: AfterTutorial
+---
+Mem: We are back to the real world, Jade.
+Jade: Let me go back. I still need to ask my parents many questions.
+Mem: Even if you go back, you wouldn't get much out of it.
+Mem: They are just fragments and will just remember that part of the memory.
+Jade: But I finally get to meet them.
+Mem: Jade, are you forgetting something? I used to work with them.
+Jade: Then tell me everything you know about them now.
+Mem: Ermm... You see I was asleep for many years. Some of my functions had gotten rusty.
+Mem: But the with the fragments you have collected just now, you could give me an upgrade.
+Jade: Upgrade?
+<<cameraShift upgradeTarget>>
+Mem: Upgrading me will also help you during your exploration in the memory world and help me recover some memories.
+<<cameraShift MiniGameTarget>>
+Mem: Or you could open the shop for business. 
+<<cameraReturn>>
+===

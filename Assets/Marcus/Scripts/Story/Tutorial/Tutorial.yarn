@@ -8,10 +8,12 @@ Jade: I am still in the shop. But it looks slightly different.
 ?: Detecting… beep…beep… Inside practice memory world.
  
 Jade: Who’ s that?!
- 
+<<portrait Character_Image none>>
 Mem(appears): Welcome young memory restorer, I am Mem, your memory assistant.
- 
-Mem: Seeing that you are new to this, let me guide you through the restoration.
+
+Mem: What's your name, young memory restorer?
+->My name is Jade.
+    Mem: Nice to meet you Jade. Seeing that you are new to this, let me guide you through the restoration.
  
 <<cameraShift FogTarget>>
 Mem: In the memory world there are forgotten areas covered in fog.
@@ -20,7 +22,7 @@ Mem: Your ultimate goal is to restore it back and unlock the story behind it.
  
 <<cameraReturn>>
  
-Mem: To restore, you will need to find memory fragments and memory echoes.
+Mem: To restore, you will need to find Memory Fragments and Memory Echoes.
  
 Mem: The former will tell you more about the memory while the latter will help you in the memory world.
 

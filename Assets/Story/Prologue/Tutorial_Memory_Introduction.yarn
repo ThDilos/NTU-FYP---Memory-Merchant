@@ -15,7 +15,9 @@ title: Tutorial_Mother_Message
 // Starts after restoring and entering the Study. Edit Mother's approved dialogue here.
 Father: You're here, Jade. 
 Mother: Hello, Jade. #line:tutorial_mother_001
+<<portrait Character_Image JadeSmile_0>>
 Jade: Father and Mother? Is it really you?
+<<portrait Character_Image none>>
 Mother: There is so much that we want to tell you, my dear. But we don't have much time.
 Father: Our family have been memory recorders for generations.
 Mother: We see, we preserve, we remember.
@@ -27,7 +29,7 @@ Father: Now, now. We should get to the important part.
 Father: It's time for the succession.
 Father: My daughter, Jade, are you ready?
 -> I am not ready.
-    Mother: Dob't worry, my dear. It is alright to feel this way.
+    Mother: Don't worry, my dear. It is alright to feel this way.
     Mother: No one starts a journey knowing everything.
     Mother: You just need to find the courage to take the first step, and you will know.
     -> ... I will try my best.
@@ -40,6 +42,7 @@ Father: Mem, I will now entrust her with you. Please guide her well.
 Mem: I understand, Master. I shall guide her to the best of my ability.
 Father: Mem, Jade is now your master.
 Mother: All the best, Jade.
+
 Jade: Wait! I still have many things to ask you about.
 Jade: Why did you leave me? Where did you go? What happened?
 Father: We wish we could stay longer.
@@ -72,11 +75,12 @@ Mum: The memory machine is an asset that is passed down in our family for genera
 
 title: FamilyPhoto
 ---
+<<portrait Character_Image JadeSmile_0>>
 Jade: It’s a photo of a family. That child… It looks like me when I was young.
  
 Jade: Then are those two my parents?
-
-Mem: You have succeeded in collecting your first memory fragment.
+<<portrait Character_Image none>>
+Mem: You have succeeded in collecting your first memory fragment. Congratulations.
 
 <<cameraShift EchoTarget 0.75>>
 Mem: There is still echoes at the next room. Let's go.
@@ -86,7 +90,7 @@ Mem: There is still echoes at the next room. Let's go.
 
 title: FogLocked
 ---
-Mem: This area has not been reconstructed.
+Mem: This area has not been reconstructed yet.
 
 Mem: Find fragments and clues to reconstruct it.
 
@@ -94,22 +98,23 @@ Mem: Find fragments and clues to reconstruct it.
 
 title: Tutorial_Cabinet_Locked
 ---
-Mem: You can't touch or change remembered objects in the Memory World. You'll need to capture an Echo first.
-Mem: The cabinet is locked. We need the Cabinet Key Echo before we can open it.
+Mem: Rule 1 of the memory world: You cannot touch or change remembered objects in the Memory World. 
+Mem: The cabinet is locked. To do so we will need a Memory Echo which remember an action of the past.
+Mem: So to open the cabinet, we will need to collect the corresponding Memory Echo before we can open it.
 <<cameraShift keyEchoTarget>>
 <<cameraKeep>>
-Mem: Look at the glowing key above the fridge. Its Echo remembers an action from the past.
+Mem: Look at the glowing key above the fridge. It is a Memory Echo.
 Mem: Hold E near the key to reveal its Echo. Release E, then hold E again to capture it.
 <<cameraReturn>>
 ===
 
 title: Tutorial_Key_Echo_Captured
 ---
-Mem: You captured the Cabinet Key Echo. It is now stored in slot 1.
+Mem: You have captured the Cabinet Key Echo. It is now stored in slot 1.
 <<cameraShift cabinetEchoTarget>>
 <<cameraKeep>>
+Mem: Memory Echoes are actions remembered by this world. Replaying the Key Echo will repeat the action of unlocking the cabinet.
 Mem: Stand beside the locked cabinet and hold 1 to replay the Echo.
-Mem: The remembered action will unlock the cabinet.
 <<cameraReturn>>
 ===
 
@@ -117,8 +122,7 @@ title: Tutorial_Cabinet_Opened
 ---
 <<cameraShift cabinetEchoTarget>>
 <<cameraKeep>>
-Mem: The cabinet is open. A recorder fragment was hidden inside.
-Mem: Echoes are actions remembered by this world. Replaying the Key Echo repeated the action of unlocking the cabinet.
+The cabinet is open. A recorder fragment was hidden inside.
 Mem: Hold E beside the recorder to collect its memory fragment.
 <<cameraReturn>>
 ===
@@ -127,14 +131,14 @@ title: Tutorial_Reconstruction_Ready
 ---
 Mem: You have collected all three memory fragments. It is time to reconstruct the memory.
 Mem: Open the Manual with R and select Reconstruction.
-Mem: Drag the words into the blanks, then choose Reconstruct. The memory will reveal the Study.
+Mem: Drag the fragments into the blanks and Reconstruct. The memory will reveal the Study.
 ===
 
 title: Tutorial_Find_Mother_Fragment
 ---
 <<cameraShift photoTarget>>
 <<cameraKeep>>
-Mem: One fragment remains: the family photo.
+Mem: There is still one fragment remaining: the family photo.
 Mem: Hold E beside it to collect the Mother fragment. Then we can reconstruct the memory.
 <<cameraReturn>>
 ===

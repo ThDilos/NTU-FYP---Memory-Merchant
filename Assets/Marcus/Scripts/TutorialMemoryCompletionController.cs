@@ -268,6 +268,7 @@ public class TutorialMemoryCompletionController : MonoBehaviour
         ReleaseGameplay();
         TutorialRewardBridge.FinishArchiveReplay();
         SceneManager.LoadScene(destination);
+        SceneReturnState.ReturnedFromLevel = "Tutorial";
     }
     private void ReleaseGameplay()
     {

@@ -72,14 +72,13 @@ public class DialogueBehaviour : MonoBehaviour
     {
         isFastSpeed = !isFastSpeed;
 
-        linePresenter.lettersPerSecond =
-            isFastSpeed ? fastSpeed : normalSpeed;
+        int newSpeed = isFastSpeed ? fastSpeed : normalSpeed;
+
+        linePresenter.SetTypingSpeed(newSpeed);
 
         UpdateButtonColors();
 
-        Debug.Log(
-            $"Typewriter speed: {linePresenter.lettersPerSecond} letters/sec"
-        );
+        Debug.Log($"Dialogue typing speed set to {newSpeed} letters/sec");
     }
 
     private void UpdateButtonColors()
