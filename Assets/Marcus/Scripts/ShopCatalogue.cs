@@ -10,7 +10,7 @@ public static class ShopCatalogue
     public const int PuzzleReward = 20;
     public const int ItemLimit = 99;
     public const int ProductCount = 7;
-    private static readonly int[] Prices = { 20, 40, 50, 10, 10, 15, 10 };
+    private static readonly int[] Prices = { 3, 40, 50, 10, 10, 15, 10 };
     public static bool IsValid(ShopProduct product) => (int)product >= 0 && (int)product < ProductCount;
     public static bool IsUpgrade(ShopProduct product) => IsValid(product) && (int)product < 3;
     public static int Price(ShopProduct product) => IsValid(product) ? Prices[(int)product] : 0;

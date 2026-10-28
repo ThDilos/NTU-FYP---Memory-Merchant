@@ -88,6 +88,7 @@ public class TutorialLockedCabinet : MemoryEcho
         replayRoutine = null;
         if (!state.EchoStored(0) || !replay.Finish()) { replay.Reset(); yield break; }
         visuals.OpenCabinet();
+        AudioManager.Instance?.PlayInteraction();
         state.DiscoverEcho(1);
         replayCompleted.Invoke();
     }

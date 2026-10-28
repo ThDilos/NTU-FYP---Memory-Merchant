@@ -1058,11 +1058,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6001000001}
+  m_Father: {fileID: 9301000101}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -160}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1109404637
@@ -1928,8 +1928,8 @@ MonoBehaviour:
   autoButton: {fileID: 500891038}
   normalSpeed: 60
   fastSpeed: 120
-  normalColor: {r: 0.9607844, g: 0.9607844, b: 0.8627452, a: 1}
-  selectedColor: {r: 1, g: 0.6470588, b: 0, a: 1}
+  normalColor: {r: 0.22, g: 0.14, b: 0.08, a: 1}
+  selectedColor: {r: 0.14, g: 0.3, b: 0.23, a: 1}
 --- !u!114 &1983794578 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1097069385632700466, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}
@@ -6514,7 +6514,6 @@ RectTransform:
   m_Children:
   - {fileID: 6001000101}
   - {fileID: 6001000111}
-  - {fileID: 985354137}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11013,6 +11012,7 @@ RectTransform:
   m_Children:
   - {fileID: 9301000111}
   - {fileID: 9301000121}
+  - {fileID: 985354137}
   m_Father: {fileID: 3500000001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

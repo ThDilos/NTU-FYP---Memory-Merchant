@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         movementActionInput = inputActionMap.FindAction("Move");
         runningActionInput = inputActionMap.FindAction("Sprint");
         rb = GetComponent<Rigidbody2D>();
+        if (GetComponent<PlayerFootstepAudio>() == null) gameObject.AddComponent<PlayerFootstepAudio>();
     }
 
     void Update()

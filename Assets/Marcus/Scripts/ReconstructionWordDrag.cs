@@ -27,6 +27,7 @@ public class ReconstructionWordDrag : MonoBehaviour, IBeginDragHandler, IDragHan
         if (dragging || board == null || !board.CanDrag(FragmentIndex)) return;
         if (!dragPosition.Begin(rect, data)) return;
         dragging = true; pointer = data.pointerId;
+        AudioManager.Instance?.PlayInteraction();
         group.blocksRaycasts = false;
         transform.SetAsLastSibling();
         dragPosition.Move(data);

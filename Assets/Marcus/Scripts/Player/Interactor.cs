@@ -77,7 +77,11 @@ public class Interactor : MonoBehaviour
 
     private void HandleInteraction(Interactible interactible)
     {
-        if (interactible.IsInteractable) interactible.Interact();
+        if (interactible.IsInteractable)
+        {
+            AudioManager.Instance?.PlayInteraction();
+            interactible.Interact();
+        }
         else
         {
             Debug.Log($"[Interactor] {interactible.name} is not interactible.");

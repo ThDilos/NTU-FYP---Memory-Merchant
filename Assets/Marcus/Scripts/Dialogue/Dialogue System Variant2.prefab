@@ -777,8 +777,8 @@ MonoBehaviour:
   autoButton: {fileID: 4142830611360195937}
   normalSpeed: 60
   fastSpeed: 200
-  normalColor: {r: 0.9607844, g: 0.9607844, b: 0.8627452, a: 1}
-  selectedColor: {r: 1, g: 0.6470588, b: 0, a: 1}
+  normalColor: {r: 0.22, g: 0.14, b: 0.08, a: 1}
+  selectedColor: {r: 0.14, g: 0.3, b: 0.23, a: 1}
 --- !u!114 &1720326088360198931 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6153880962842520684, guid: 826d9ce6dc0f26948b4b0d08168d239e, type: 3}

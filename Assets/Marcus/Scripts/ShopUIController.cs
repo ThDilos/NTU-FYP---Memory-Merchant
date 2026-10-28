@@ -34,6 +34,7 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] private string minigameSceneName = "ShopMinigamePlaceholder";
     [SerializeField] private string memoryWorldSceneName = "Tutorial_MemoryWorld_Marcus";
     private bool sceneLoading;
+    private DialogueRunner dialogueRunner;
 
     public bool IsShopInputBlocked => sceneLoading ||
         (settingsPanel != null && settingsPanel.activeSelf) ||
@@ -47,8 +48,9 @@ public class ShopUIController : MonoBehaviour
 
     private void Awake()
     {
+        dialogueRunner = FindAnyObjectByType<DialogueRunner>();
         bool tutorialComplete = TutorialRewardBridge.TutorialCompleted;
-        if (minigameEntrance != null) minigameEntrance.SetActive(tutorialComplete);
+        if (minigameEntrance != null) minigameEntrance.SetActive(tutorialComplete && !TutorialRewardBridge.NeedsFirstEchoUpgrade);
         if (upgradesEntrance != null) upgradesEntrance.SetActive(tutorialComplete);
         if (tutorialMemoryAnchor != null) tutorialMemoryAnchor.SetActive(!tutorialComplete);
         // Returning from the memory must not restart the shop's opening prologue.
@@ -141,7 +143,8 @@ public class ShopUIController : MonoBehaviour
 
     public void OpenUpgrades()
     {
-        if (!TutorialRewardBridge.TutorialCompleted || sceneLoading || upgradesPanel == null || upgradesPanel.activeSelf) return;
+        if (!TutorialRewardBridge.TutorialCompleted || sceneLoading || upgradesPanel == null || upgradesPanel.activeSelf ||
+            (dialogueRunner != null && dialogueRunner.IsDialogueRunning)) return;
         ClosePanels();
         upgradesPause.Capture(null);
         upgradesPanel.transform.SetAsLastSibling();
@@ -211,7 +214,11 @@ public class ShopUIController : MonoBehaviour
     private void RefreshHUD()
     {
         if (objectivesText != null)
-            objectivesText.text = TutorialRewardBridge.TutorialCompleted ? postTutorialObjectives : objectives;
+            objectivesText.text = TutorialRewardBridge.NeedsFirstEchoUpgrade
+                ? "Open Upgrades and buy Echo Slot II for 3 Memory Points."
+                : TutorialRewardBridge.TutorialCompleted ? postTutorialObjectives : objectives;
+        if (minigameEntrance != null)
+            minigameEntrance.SetActive(TutorialRewardBridge.TutorialCompleted && !TutorialRewardBridge.NeedsFirstEchoUpgrade);
         if (coinsText != null)
             coinsText.text = (coins + TutorialRewardBridge.Coins).ToString();
         if (fragmentPointsText != null)
@@ -220,7 +227,8 @@ public class ShopUIController : MonoBehaviour
 
     public void OpenMinigame()
     {
-        if (!TutorialRewardBridge.TutorialCompleted || IsShopInputBlocked)
+        if (!TutorialRewardBridge.TutorialCompleted || TutorialRewardBridge.NeedsFirstEchoUpgrade || IsShopInputBlocked ||
+            (dialogueRunner != null && dialogueRunner.IsDialogueRunning))
             return;
         if (!Application.CanStreamedLevelBeLoaded(minigameSceneName))
         {

@@ -14,6 +14,8 @@ public static class TutorialRewardBridge
     public static int EchoCapacity { get; private set; } = 1;
     public static bool DualEchoReplayUnlocked { get; private set; }
     public static int PlayableEchoCapacity => TutorialCompleted && !IsArchiveReplay ? EchoCapacity : 1;
+    // Owning Slot II completes the shop lesson, including after loading a save.
+    public static bool NeedsFirstEchoUpgrade => TutorialCompleted && !IsArchiveReplay && EchoCapacity < 2;
     private static int[] items = new int[4];
     public static event Action Changed;
     public static void MarkMemoryWorldIntroSeen() => MemoryWorldIntroSeen = true;
@@ -131,6 +133,7 @@ public static class TutorialRewardBridge
         }
         SaveProgress();
         message = ShopCatalogue.IsUpgrade(product) ? "Upgrade purchased and saved." : "Item added to your inventory.";
+        AudioManager.Instance?.PlayPurchase();
         Changed?.Invoke();
         return true;
     }
@@ -153,6 +156,7 @@ public static class TutorialRewardBridge
         if (round == 0 || round != activePuzzleRound || !TutorialCompleted || IsArchiveReplay) return false;
         activePuzzleRound = 0;
         Coins = (int)Math.Min(int.MaxValue, (long)Coins + ShopCatalogue.PuzzleReward);
+        AudioManager.Instance?.PlayPurchase();
         SaveProgress();
         Changed?.Invoke();
         return true;

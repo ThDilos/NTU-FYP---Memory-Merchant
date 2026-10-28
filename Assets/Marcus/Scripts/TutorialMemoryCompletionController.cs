@@ -266,9 +266,10 @@ public class TutorialMemoryCompletionController : MonoBehaviour
         if (!sequence.TryContinue()) return;
         continueButton.interactable = false;
         ReleaseGameplay();
+        bool replay = TutorialRewardBridge.IsArchiveReplay;
         TutorialRewardBridge.FinishArchiveReplay();
+        SceneReturnState.ReturnedFromLevel = replay ? null : "Tutorial";
         SceneManager.LoadScene(destination);
-        SceneReturnState.ReturnedFromLevel = "Tutorial";
     }
     private void ReleaseGameplay()
     {

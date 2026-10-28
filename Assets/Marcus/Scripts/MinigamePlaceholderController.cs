@@ -109,6 +109,7 @@ public class MinigamePlaceholderController : MonoBehaviour
         if (returning || round == null || round.Complete) return false;
         if (!round.TryPlace(piece,slot)) return false;
         pieces[piece].SnapTo(slots[slot].anchoredPosition,SlotSize);
+        AudioManager.Instance?.PlayPlacement();
         selectedPiece = -1;
         foreach (var tile in pieces) tile.SetSelected(false);
         if (round.Complete)

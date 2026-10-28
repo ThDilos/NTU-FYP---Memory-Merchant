@@ -1,0 +1,83 @@
+{
+  "sampleRate": 44100,
+  "provenance": "Original procedural composition and synthesis. No third-party samples.",
+  "assets": [
+    {
+      "name": "music_shop",
+      "seconds": 53.333333333333336,
+      "channels": 2,
+      "peak": 0.62,
+      "rms": 0.11836743041877654
+    },
+    {
+      "name": "music_memory",
+      "seconds": 64,
+      "channels": 2,
+      "peak": 0.62,
+      "rms": 0.12144731135806767
+    },
+    {
+      "name": "music_puzzle",
+      "seconds": 43.636371882086166,
+      "channels": 2,
+      "peak": 0.62,
+      "rms": 0.14078832653197795
+    },
+    {
+      "name": "button",
+      "seconds": 0.09501133786848072,
+      "channels": 1,
+      "peak": 0.4,
+      "rms": 0.08022227810750535
+    },
+    {
+      "name": "dialogue",
+      "seconds": 0.04201814058956916,
+      "channels": 1,
+      "peak": 0.26,
+      "rms": 0.06242843827513136
+    },
+    {
+      "name": "purchase",
+      "seconds": 0.65,
+      "channels": 1,
+      "peak": 0.57,
+      "rms": 0.11843211554967448
+    },
+    {
+      "name": "footstep_0",
+      "seconds": 0.17002267573696145,
+      "channels": 1,
+      "peak": 0.46,
+      "rms": 0.06218444652642713
+    },
+    {
+      "name": "footstep_1",
+      "seconds": 0.17002267573696145,
+      "channels": 1,
+      "peak": 0.46,
+      "rms": 0.058585878762026436
+    },
+    {
+      "name": "interact",
+      "seconds": 0.21,
+      "channels": 1,
+      "peak": 0.43,
+      "rms": 0.09419160799985003
+    },
+    {
+      "name": "collect",
+      "seconds": 0.48,
+      "channels": 1,
+      "peak": 0.48,
+      "rms": 0.11870373011134906
+    },
+    {
+      "name": "place",
+      "seconds": 0.12,
+      "channels": 1,
+      "peak": 0.4,
+      "rms": 0.06272353093997055
+    }
+  ]
+}

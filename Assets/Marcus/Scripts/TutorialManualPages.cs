@@ -291,7 +291,11 @@ public class TutorialManualPages : MonoBehaviour
     public int SlotFor(int fragment) => state != null ? state.Reconstruction.SlotOf(fragment) : -1;
     public void DropWord(int fragment, int slot)
     {
-        if (CanDrag(fragment) && state.Reconstruction.PlaceAt(fragment, slot, state.HasFragment)) feedback = "";
+        if (CanDrag(fragment) && state.Reconstruction.PlaceAt(fragment, slot, state.HasFragment))
+        {
+            feedback = "";
+            AudioManager.Instance?.PlayPlacement();
+        }
         RefreshBoard();
     }
     public void ResetSentence()

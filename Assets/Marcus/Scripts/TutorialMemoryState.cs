@@ -43,6 +43,7 @@ public class TutorialMemoryState : MonoBehaviour
         if (!HasFragment(i) && fragments[i] != null && LevelInventory.Instance != null)
         {
             LevelInventory.Instance.Collect(fragments[i]);
+            AudioManager.Instance?.PlayCollection();
             ShowAlert("Fragment collected: " + fragmentAlertNames[i]);
         }
         Changed?.Invoke();
@@ -53,6 +54,7 @@ public class TutorialMemoryState : MonoBehaviour
         if (echoes[i] != null && !echoes[i].IsStored && LevelInventory.Instance != null)
         {
             LevelInventory.Instance.Collect(echoes[i]);
+            AudioManager.Instance?.PlayCollection();
             ShowAlert("Echo collected: " + EchoName(i));
             TryQueueGuidance("Tutorial_Key_Echo_Captured");
         }

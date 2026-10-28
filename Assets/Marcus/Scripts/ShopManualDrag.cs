@@ -32,6 +32,7 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         originalPosition = rect.anchoredPosition;
         pointerId = eventData.pointerId;
         dragging = true;
+        AudioManager.Instance?.PlayInteraction();
         OnDrag(eventData);
     }
 
@@ -48,7 +49,11 @@ public class ShopManualDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         if (!dragging || eventData.pointerId != pointerId) return;
         bool validDrop = IsOverMachine(eventData) && shopUI != null && shopUI.CanEnterTutorialMemoryWorld;
         CancelDrag();
-        if (validDrop) shopUI.TryEnterMemoryWorld();
+        if (validDrop)
+        {
+            AudioManager.Instance?.PlayCollection();
+            shopUI.TryEnterMemoryWorld();
+        }
     }
 
     private bool IsOverMachine(PointerEventData eventData) =>

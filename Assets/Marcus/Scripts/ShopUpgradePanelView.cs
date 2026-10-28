@@ -122,6 +122,7 @@ public sealed class ShopUpgradePanelView : MonoBehaviour
     {
         TutorialRewardBridge.Changed += RefreshCatalogue;
         previousSize = new Vector2(-1, -1);
+        if (window != null && TutorialRewardBridge.NeedsFirstEchoUpgrade) ShowCategory(0);
         RefreshCatalogue();
         Fit();
     }
@@ -132,6 +133,9 @@ public sealed class ShopUpgradePanelView : MonoBehaviour
         if (balance == null || purchaseButton == null) return;
         balanceLabel.text = category == 0 ? "Memory Points" : "Coins";
         balance.text = (category == 0 ? TutorialRewardBridge.MemoryPoints : TutorialRewardBridge.Coins).ToString();
+        categoryNote.text = TutorialRewardBridge.NeedsFirstEchoUpgrade
+            ? "Tutorial: buy Echo Slot II for 3 Memory Points."
+            : "Expand what your Echoes can do.";
         for (int i = 0; i < rowPrices.Length; i++)
         {
             ShopProduct product = (ShopProduct)i;
