@@ -32,6 +32,7 @@ public static class TutorialRewardBridge
     public static void BeginNewGame()
     {
         ResetSession();
+        DialogueHistory.ClearSession();
         TutorialProgressSave.DeleteCheckpoint();
         Changed?.Invoke();
     }

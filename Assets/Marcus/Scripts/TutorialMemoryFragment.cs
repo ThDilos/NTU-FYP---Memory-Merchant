@@ -14,6 +14,7 @@ public class TutorialMemoryFragment : MemoryFragment
     }
     public override void OnCollect()
     {
+        base.OnCollect();
         if (visuals == null) return;
         if (fragmentIndex == 0) visuals.CollectMotherFragment();
         else if (fragmentIndex == 1) visuals.CollectRecorderFragment();

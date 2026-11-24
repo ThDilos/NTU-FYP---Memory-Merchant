@@ -958,7 +958,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00089644, y: 0.004239832}
+  m_Offset: {x: -0.00089644, y: -0.055760168}
   m_SpriteTilingProperty:
     border: {x: 2.6299999, y: 1.28, z: 3.48, w: 0.29999998}
     pivot: {x: 0.4315962, y: 0.76986676}
@@ -968,7 +968,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.17, y: 0.3}
+  m_Size: {x: 0.24, y: 0.42}
   m_EdgeRadius: 0
 --- !u!114 &913446119
 MonoBehaviour:
@@ -1460,11 +1460,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4947600858992874296, guid: 42b8df0992c93764f8560311d730c744, type: 3}
       propertyPath: runSpeed
-      value: 1
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 4947600858992874296, guid: 42b8df0992c93764f8560311d730c744, type: 3}
       propertyPath: walkSpeed
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4947600858992874296, guid: 42b8df0992c93764f8560311d730c744, type: 3}
       propertyPath: inputActions
@@ -1650,6 +1650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1078781903}
   - component: {fileID: 1078781902}
+  - component: {fileID: 9002018001}
   m_Layer: 0
   m_Name: main BG
   m_TagString: Untagged
@@ -1732,6 +1733,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9002018001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078781901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9659db1e39943a3af0dbe67a2d8d83c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::MemoryWorldAmbientFog
+  mapRenderer: {fileID: 1078781902}
+  fogColour: {r: 0.76, g: 0.8, b: 0.77, a: 1}
+  opacity: 0.48
+  innerFeather: 0.35
+  outerReach: 1.6
+  pixelSize: 0.025
+  driftSpeed: 0.025
+  sortingOrder: 8
 --- !u!1 &1175832102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,6 +1956,7 @@ GameObject:
   - component: {fileID: 1274875741}
   - component: {fileID: 1274875740}
   - component: {fileID: 1274875739}
+  - component: {fileID: 9002018002}
   m_Layer: 5
   m_Name: UI_Canvas
   m_TagString: Untagged
@@ -1942,6 +1964,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9002018002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274875738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680dcdfbc66e40cd89aa76f93d936465, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::MemoryWorldHUDGuidance
+  settingsButton: {fileID: 527517424}
+  manualButton: {fileID: 981505108}
+  objectivePanel: {fileID: 8201000010}
+  objectiveText: {fileID: 8201000110}
+  player: {fileID: 1074214984}
+  tutorialUI: {fileID: 1234489787}
+  dialogueRunner: {fileID: 1865578382}
 --- !u!114 &1274875739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2497,6 +2538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow2D
   target: {fileID: 1074214982}
   smoothTime: 0.2
+  playerFollowSmoothTime: 0.12
   offset: {x: 0, y: 0}
 --- !u!1 &1618573863
 GameObject:
@@ -3039,6 +3081,8 @@ MonoBehaviour:
   inactiveTabSprite: {fileID: -8391914037356884623, guid: 395ad8bc8f0c14a42a3005bd00e4ef4a, type: 3}
   activeTabSprite: {fileID: 6837675830863856476, guid: 11a023c662ac5b748bedbc6e6ad0a6da, type: 3}
   bookLayout: {fileID: 4001000211}
+  bookBackground: {fileID: 4001000223}
+  reconstructionSpread: {fileID: 21300000, guid: 6047e5226a9f41f4a57b000ec4010011, type: 3}
   gameplayInputAssets:
   - {fileID: -944628639613478452, guid: 3e19bc320d87f714caafa6df40a8c898, type: 3}
 --- !u!1 &4001000210
@@ -3069,8 +3113,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4001000221}
   - {fileID: 4001000231}
+  - {fileID: 4001000221}
   - {fileID: 4001000241}
   - {fileID: 4001000401}
   m_Father: {fileID: 178913579}
@@ -3115,7 +3159,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1320, y: 635}
+  m_SizeDelta: {x: 1280, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4001000222
 CanvasRenderer:
@@ -3145,7 +3189,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 56498424623632084, guid: 2bbe8fa11f3101647a64b56da66361f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ba25920c7d834800a39c237521720ba9, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3541,7 +3585,6 @@ MonoBehaviour:
   - Study
   firstConnector: used the
   secondConnector: in the
-  reconstructionBoardArtwork: {fileID: 21300000, guid: 6047e5226a9f41f4a57b000ec4010011, type: 3}
 --- !u!114 &7000000006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3712,7 +3755,7 @@ MonoBehaviour:
   state: {fileID: 7000000006}
   visuals: {fileID: 509345990}
   tutorialUI: {fileID: 1234489787}
-  useRange: 0.25
+  useRange: 0.2
   keyEcho: {fileID: 7000000200}
   replayPlaceholderSprite: {fileID: 21300000, guid: 4817102ebc5402b4ea930ba487928c13, type: 3}
   replayHeight: 0.77
@@ -3878,7 +3921,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.42, y: 0.85}
+  m_Size: {x: 0.3, y: 0.85}
   m_EdgeRadius: 0
 --- !u!61 &7000000401
 BoxCollider2D:

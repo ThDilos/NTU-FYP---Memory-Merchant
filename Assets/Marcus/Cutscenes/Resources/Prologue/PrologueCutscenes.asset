@@ -1,0 +1,353 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a89b83215bd408986e70ff924a94737, type: 3}
+  m_Name: PrologueCutscenes
+  m_EditorClassIdentifier: Assembly-CSharp::PrologueCutsceneLibrary
+  shots:
+  - id: courtyard
+    background: {fileID: 2800000, guid: 05199468148645c4b88ae1d24601d40b, type: 3}
+    cameraRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 320
+      height: 180
+    layers:
+    - name: CrowdLeft
+      characterId: 
+      texture: {fileID: 2800000, guid: cf9f772003495cd44944e7e717285c13, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 35, y: 58}
+      size: {x: 44, y: 48}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: CrowdRight
+      characterId: 
+      texture: {fileID: 2800000, guid: 1b8c45d2d71a0be4da3041ec53b711ea, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 248, y: 56}
+      size: {x: 48, y: 48}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Jade
+      characterId: 
+      texture: {fileID: 2800000, guid: 20c8622fe78da7a48b396de1f7fe39b3, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 2800000, guid: 30d430aa4b28712479da1d05c5d4552e, type: 3}
+      speakingPose: {fileID: 2800000, guid: 098bc5560fccbe743a903474305ceff6, type: 3}
+      position: {x: 98, y: 58}
+      size: {x: 64, y: 96}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Aunt
+      characterId: 
+      texture: {fileID: 2800000, guid: 02ada0d30349da046b487c5e28ee6b76, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 2800000, guid: 00f713f50a60b8343968201b1b43f50f, type: 3}
+      speakingPose: {fileID: 2800000, guid: 18b415be5afac1043b966650df50d486, type: 3}
+      position: {x: 146, y: 58}
+      size: {x: 64, y: 96}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Foliage
+      characterId: 
+      texture: {fileID: 2800000, guid: 166733786551b3347b1909558e27b0e2, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: -2, y: 0}
+      size: {x: 324, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 1
+    - name: Flash
+      characterId: 
+      texture: {fileID: 0}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 0, y: 0}
+      size: {x: 320, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 0}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    actions:
+    - id: photo
+      clip: {fileID: 7400000, guid: 889a3fa743e670148ad2c7ea37fffef9, type: 2}
+      walkingLayer: 
+      interactionCue: 1
+  - id: conversation
+    background: {fileID: 2800000, guid: 05199468148645c4b88ae1d24601d40b, type: 3}
+    cameraRect:
+      serializedVersion: 2
+      x: 80
+      y: 68
+      width: 160
+      height: 90
+    layers:
+    - name: CrowdLeft
+      characterId: 
+      texture: {fileID: 2800000, guid: cf9f772003495cd44944e7e717285c13, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 35, y: 58}
+      size: {x: 44, y: 48}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: CrowdRight
+      characterId: 
+      texture: {fileID: 2800000, guid: 1b8c45d2d71a0be4da3041ec53b711ea, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 248, y: 56}
+      size: {x: 48, y: 48}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Jade
+      characterId: 
+      texture: {fileID: 2800000, guid: 20c8622fe78da7a48b396de1f7fe39b3, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 2800000, guid: 30d430aa4b28712479da1d05c5d4552e, type: 3}
+      speakingPose: {fileID: 2800000, guid: 098bc5560fccbe743a903474305ceff6, type: 3}
+      position: {x: 98, y: 58}
+      size: {x: 64, y: 96}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Aunt
+      characterId: 
+      texture: {fileID: 2800000, guid: 02ada0d30349da046b487c5e28ee6b76, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 2800000, guid: 00f713f50a60b8343968201b1b43f50f, type: 3}
+      speakingPose: {fileID: 2800000, guid: 18b415be5afac1043b966650df50d486, type: 3}
+      position: {x: 146, y: 58}
+      size: {x: 64, y: 96}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Foliage
+      characterId: 
+      texture: {fileID: 2800000, guid: 166733786551b3347b1909558e27b0e2, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: -2, y: 0}
+      size: {x: 324, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 1
+    - name: Flash
+      characterId: 
+      texture: {fileID: 0}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 0, y: 0}
+      size: {x: 320, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 0}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    actions:
+    - id: photo
+      clip: {fileID: 7400000, guid: 889a3fa743e670148ad2c7ea37fffef9, type: 2}
+      walkingLayer: 
+      interactionCue: 1
+  - id: handover
+    background: {fileID: 2800000, guid: 6c3c1c7f774039c4a857ce20534230b7, type: 3}
+    cameraRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 320
+      height: 180
+    layers:
+    - name: Shade
+      characterId: 
+      texture: {fileID: 0}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 0, y: 0}
+      size: {x: 320, y: 180}
+      color: {r: 0.26666668, g: 0.16862746, b: 0.09411765, a: 0.20392157}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: AuntHand
+      characterId: 
+      texture: {fileID: 2800000, guid: ae75f70ae0276c64a82b317fb01f16f9, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 160, y: 0}
+      size: {x: 170, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: JadeHand
+      characterId: 
+      texture: {fileID: 2800000, guid: d9b41991c22640848b21c66014ae9945, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: -10, y: 0}
+      size: {x: 170, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Key
+      characterId: 
+      texture: {fileID: 2800000, guid: f338604c60f8629429025c74c5b5a6e1, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 185, y: 106}
+      size: {x: 32, y: 32}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    actions:
+    - id: handover
+      clip: {fileID: 7400000, guid: 998daec4bd707474a89439dc142a9bea, type: 2}
+      walkingLayer: 
+      interactionCue: 1
+  - id: exterior
+    background: {fileID: 2800000, guid: bce5e6b1410c40a4ea266786db78032c, type: 3}
+    cameraRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 320
+      height: 180
+    layers:
+    - name: Jade
+      characterId: 
+      texture: {fileID: 2800000, guid: 762fa9f980fff9944b4453e84384a029, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 2800000, guid: 98bca0c6e4e958c4bac2a04eb3b46f8c, type: 3}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 98, y: 58}
+      size: {x: 64, y: 96}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 2
+      framesPerSecond: 3
+      sway: 0
+    - name: Key
+      characterId: 
+      texture: {fileID: 2800000, guid: f338604c60f8629429025c74c5b5a6e1, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 226, y: 89}
+      size: {x: 16, y: 16}
+      color: {r: 1, g: 1, b: 1, a: 0}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    actions:
+    - id: approach
+      clip: {fileID: 7400000, guid: ce61f00bb6073fc4f9a0efa10aea5b72, type: 2}
+      walkingLayer: Jade
+      interactionCue: 0
+    - id: unlock
+      clip: {fileID: 7400000, guid: dd1d96f2ec1718e4193195c6ff8cd362, type: 2}
+      walkingLayer: 
+      interactionCue: 1
+  - id: interior
+    background: {fileID: 2800000, guid: e373366c9480d8f4aa36da559471a947, type: 3}
+    cameraRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 320
+      height: 180
+    layers:
+    - name: Jade
+      characterId: 
+      texture: {fileID: 0}
+      sprite: {fileID: -6728740883493928157, guid: c4f76e0a778fe1e43aae63d93ea2e995, type: 3}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 147, y: 59}
+      size: {x: 27, y: 38}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    - name: Machine
+      characterId: 
+      texture: {fileID: 2800000, guid: ec8c3f0bf8414f54d9abf382666477bf, type: 3}
+      sprite: {fileID: 0}
+      idleTexture: {fileID: 0}
+      blink: {fileID: 0}
+      speakingPose: {fileID: 0}
+      position: {x: 0, y: 0}
+      size: {x: 320, y: 180}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      frameCount: 1
+      framesPerSecond: 8
+      sway: 0
+    actions:
+    - id: reveal
+      clip: {fileID: 7400000, guid: 2a12dea67a2803d46ac32a4c22cf2ce0, type: 2}
+      walkingLayer: 
+      interactionCue: 0
+    - id: return
+      clip: {fileID: 7400000, guid: 7d9ec18fffccd404c9bbf062c5cab90e, type: 2}
+      walkingLayer: 
+      interactionCue: 0

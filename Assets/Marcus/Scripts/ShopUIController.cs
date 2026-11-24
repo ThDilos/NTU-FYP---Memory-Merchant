@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,6 +34,7 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] private GameObject tutorialMemoryAnchor;
     [SerializeField] private string minigameSceneName = "ShopMinigamePlaceholder";
     [SerializeField] private string memoryWorldSceneName = "Tutorial_MemoryWorld_Marcus";
+    [SerializeField] private SpriteRenderer machineVisual;
     private bool sceneLoading;
     private DialogueRunner dialogueRunner;
 
@@ -250,8 +252,15 @@ public class ShopUIController : MonoBehaviour
         }
         sceneLoading = true;
         PlayerPrefs.Save();
-        SceneManager.LoadScene(memoryWorldSceneName);
+        StartCoroutine(WakeMachineAndEnter());
         return true;
+    }
+
+    private IEnumerator WakeMachineAndEnter()
+    {
+        if (machineVisual != null && machineVisual.enabled && machineVisual.gameObject.activeInHierarchy)
+            yield return ShopMachineWakeEffect.Play(machineVisual);
+        MemoryWorldEntryEffect.Enter(memoryWorldSceneName, machineVisual);
     }
 
     private void OnDisable()

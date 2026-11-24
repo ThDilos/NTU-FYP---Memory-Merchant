@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ public sealed class EchoInventoryDisplay : MonoBehaviour
     [SerializeField] private TutorialLockedCabinet cabinet;
     private Canvas hud;
     private readonly SlotDisplay[] slots = new SlotDisplay[3];
+    private readonly HashSet<MemoryEcho> shownEchoes = new HashSet<MemoryEcho>();
+    private readonly List<MemoryEcho> pendingPulses = new List<MemoryEcho>();
+    private int pulseReadyFrame;
     private bool Blocked => Time.timeScale <= 0f ||
         (GameController.Instance != null && GameController.Instance.isPaused) ||
         (tutorialUI != null && (tutorialUI.ExternalInputBlocked ||
@@ -45,7 +49,8 @@ public sealed class EchoInventoryDisplay : MonoBehaviour
     {
         if (inventory != null)
         {
-            inventory.EchoInventoryChanged += Refresh;
+            RememberInventory();
+            inventory.EchoInventoryChanged += OnInventoryChanged;
             inventory.EchoCapacityChanged += Refresh;
         }
         if (state != null) state.Changed += Refresh;
@@ -56,10 +61,12 @@ public sealed class EchoInventoryDisplay : MonoBehaviour
     {
         if (inventory != null)
         {
-            inventory.EchoInventoryChanged -= Refresh;
+            inventory.EchoInventoryChanged -= OnInventoryChanged;
             inventory.EchoCapacityChanged -= Refresh;
         }
         if (state != null) state.Changed -= Refresh;
+        pendingPulses.Clear();
+        shownEchoes.Clear();
         if (hud != null) hud.gameObject.SetActive(false);
     }
     private void LateUpdate()
@@ -67,6 +74,33 @@ public sealed class EchoInventoryDisplay : MonoBehaviour
         if (hud == null) return;
         bool visible = inventory != null && !Blocked;
         if (hud.gameObject.activeSelf != visible) hud.gameObject.SetActive(visible);
+        if (!visible || pendingPulses.Count == 0 || Time.frameCount < pulseReadyFrame) return;
+        for (int i = 0; i < slots.Length; i++)
+            if (pendingPulses.Contains(inventory.GetEchoInSlot(i))) slots[i].PulseCapture();
+        pendingPulses.Clear();
+    }
+    private void RememberInventory()
+    {
+        shownEchoes.Clear();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            MemoryEcho echo = inventory.GetEchoInSlot(i);
+            if (echo != null) shownEchoes.Add(echo);
+        }
+    }
+    private void OnInventoryChanged()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            MemoryEcho echo = inventory.GetEchoInSlot(i);
+            if (echo == null || shownEchoes.Contains(echo) || pendingPulses.Contains(echo)) continue;
+            pendingPulses.Add(echo);
+            // Tutorial guidance starts on the following frame and can hide the HUD.
+            pulseReadyFrame = Time.frameCount + 2;
+        }
+        RememberInventory();
+        pendingPulses.RemoveAll(echo => !shownEchoes.Contains(echo));
+        Refresh();
     }
     private void Refresh()
     {

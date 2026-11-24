@@ -40,6 +40,7 @@ public class Interactor : MonoBehaviour
 
     void Awake()
     {
+        if (markerText != null) markerText.raycastTarget = false;
         if (marker != null)
         {
             Canvas markerCanvas = marker.GetComponent<Canvas>();
@@ -96,7 +97,7 @@ public class Interactor : MonoBehaviour
         foreach (Collider2D col in cols)
         {
             Interactible interactible = col.GetComponent<Interactible>();
-            if (interactible == null || !interactible.IsInteractable) continue;
+            if (interactible == null || !interactible.CanShowInteractionHint) continue;
 
             float distance = Vector2.Distance(transform.position, col.ClosestPoint(transform.position));
             if (distance < closestDistance)

@@ -1384,8 +1384,8 @@ Camera:
   m_GameObject: {fileID: 1350455184}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1500,6 +1500,9 @@ MonoBehaviour:
   target: {fileID: 0}
   smoothTime: 0.2
   offset: {x: 0, y: 0}
+  framingBackground: {fileID: 1525172270}
+  fillFramingWidth: 1
+  verticalCropAlignment: 0.84
 --- !u!1001 &1395627151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2158,6 +2161,7 @@ MonoBehaviour:
   tutorialMemoryAnchor: {fileID: 6001000110}
   minigameSceneName: ShopMinigamePlaceholder
   memoryWorldSceneName: Tutorial_MemoryWorld_Marcus
+  machineVisual: {fileID: 1229953215}
 --- !u!1 &3200000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5308,6 +5312,8 @@ MonoBehaviour:
   inactiveTabSprite: {fileID: -8391914037356884623, guid: 395ad8bc8f0c14a42a3005bd00e4ef4a, type: 3}
   activeTabSprite: {fileID: 6837675830863856476, guid: 11a023c662ac5b748bedbc6e6ad0a6da, type: 3}
   bookLayout: {fileID: 4001000001}
+  bookBackground: {fileID: 4001000013}
+  reconstructionSpread: {fileID: 0}
   gameplayInputAssets:
   - {fileID: -944628639613478452, guid: 3e19bc320d87f714caafa6df40a8c898, type: 3}
 --- !u!114 &4000000006
@@ -5353,8 +5359,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4001000011}
   - {fileID: 4001000021}
+  - {fileID: 4001000011}
   - {fileID: 4001000031}
   - {fileID: 4001000191}
   m_Father: {fileID: 3200000121}
@@ -5399,7 +5405,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1320, y: 635}
+  m_SizeDelta: {x: 1280, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4001000012
 CanvasRenderer:
@@ -5429,7 +5435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 56498424623632084, guid: 2bbe8fa11f3101647a64b56da66361f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ba25920c7d834800a39c237521720ba9, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

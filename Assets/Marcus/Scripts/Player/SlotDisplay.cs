@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,12 @@ public sealed class SlotDisplay : MonoBehaviour
     private Image frame;
     private Image surface;
     private Image icon;
+    private Image captureGlow;
     private TMP_Text shortcut;
     private TMP_Text title;
     private TMP_Text hint;
     private Button button;
+    private Coroutine capturePulse;
 
     public static SlotDisplay Create(Transform parent, int index, Action useEcho)
     {
@@ -33,6 +36,12 @@ public sealed class SlotDisplay : MonoBehaviour
         slot.button.targetGraphic = slot.surface;
         slot.button.navigation = new Navigation { mode = Navigation.Mode.None };
         slot.button.onClick.AddListener(() => useEcho());
+        slot.captureGlow = Panel("Capture_Glow", frame.transform, Color.clear);
+        slot.captureGlow.raycastTarget = false;
+        RectTransform glow = slot.captureGlow.rectTransform;
+        glow.anchorMin = Vector2.zero;
+        glow.anchorMax = Vector2.one;
+        glow.offsetMin = glow.offsetMax = Vector2.zero;
         slot.shortcut = Label("Shortcut", frame.transform, new Vector2(-65, -20), new Vector2(40, 32), 24);
         slot.shortcut.fontStyle = FontStyles.Bold;
         slot.icon = Panel("Icon", frame.transform, Color.white);
@@ -49,6 +58,7 @@ public sealed class SlotDisplay : MonoBehaviour
     public void SetDisplay(int index, bool unlocked, Sprite sprite, string displayName, string instruction, bool usable)
     {
         bool occupied = unlocked && !string.IsNullOrEmpty(displayName);
+        if (!occupied || icon.sprite != sprite) ResetCapturePulse();
         shortcut.text = (index + 1).ToString();
         icon.sprite = occupied ? sprite : null;
         icon.enabled = occupied && sprite != null;
@@ -57,6 +67,41 @@ public sealed class SlotDisplay : MonoBehaviour
         frame.color = unlocked ? new Color(0.68f, 0.43f, 0.18f) : new Color(0.32f, 0.28f, 0.22f);
         title.color = shortcut.color = unlocked ? new Color(1f, 0.90f, 0.68f) : new Color(0.62f, 0.57f, 0.47f);
         button.interactable = occupied && usable;
+    }
+
+    public void PulseCapture()
+    {
+        ResetCapturePulse();
+        if (isActiveAndEnabled) capturePulse = StartCoroutine(AnimateCapturePulse());
+    }
+
+    private IEnumerator AnimateCapturePulse()
+    {
+        const float duration = 0.4f;
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.unscaledDeltaTime)
+        {
+            float pulse = Mathf.Sin(elapsed / duration * Mathf.PI);
+            captureGlow.color = new Color(1f, 0.76f, 0.31f, pulse * 0.24f);
+            icon.rectTransform.localScale = Vector3.one * (1f + pulse * 0.12f);
+            yield return null;
+        }
+        capturePulse = null;
+        RestoreCaptureVisuals();
+    }
+
+    private void OnDisable() => ResetCapturePulse();
+
+    private void ResetCapturePulse()
+    {
+        if (capturePulse != null) StopCoroutine(capturePulse);
+        capturePulse = null;
+        RestoreCaptureVisuals();
+    }
+
+    private void RestoreCaptureVisuals()
+    {
+        if (captureGlow != null) captureGlow.color = Color.clear;
+        if (icon != null) icon.rectTransform.localScale = Vector3.one;
     }
 
     private static Image Panel(string name, Transform parent, Color color)

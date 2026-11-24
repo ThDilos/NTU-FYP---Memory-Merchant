@@ -12,6 +12,9 @@ public class Interactible : MonoBehaviour
     [Description("The words on the interaction marker")]
     public string interactionPrompt = "Interact";
     public virtual string InteractionHint => "Hold E";
+    // An object may still explain its current step while an animation prevents
+    // another interaction. Actions continue to use IsInteractable.
+    public virtual bool CanShowInteractionHint => IsInteractable;
 
     [Header("Highlight Effect")]
     [Description("Glowing effect that's always visible? Add the glowing effect into highLightSFX. Will be spawned once [isHighlighted] becomes true.\nAnd destroyed if it becomes false.")]

@@ -22,9 +22,9 @@ public class MemoryEcho : Collectible
         EchoReplayVisual.Create(transform, echoReplay, image != null ? image : FallbackSprite, visualName, height);
 
     protected IEnumerator PlayReplayVisual(EchoReplayVisual visual, Vector3 position,
-        float holdSeconds, Func<bool> blocked)
+        float holdSeconds, Func<bool> blocked, bool goldOutline = false)
     {
-        visual.RevealAt(position);
+        visual.RevealAt(position, goldOutline);
         yield return visual.FadeTo(0.85f, 0.3f, blocked);
         yield return visual.Hold(holdSeconds, blocked);
         yield return visual.FadeTo(0f, 0.3f, blocked);
@@ -37,6 +37,7 @@ public class MemoryEcho : Collectible
     public override void OnCollect()
     {
         IsDiscovered = true;
+        MemoryCollectionEffects.EchoCaptured(transform);
     }
 
     // Generic slot replay is presentation only; target interactions validate world actions.

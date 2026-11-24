@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,11 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionAsset inputActions;
 
     [Header("Movement")]
-    [SerializeField] private float walkSpeed = 50f;
-    [SerializeField] private float runSpeed = 80f;
-
-    [Header("Camera")]
-    [SerializeField] private Camera camera;
+    [SerializeField, Min(0f)] private float walkSpeed = 4f;
+    [SerializeField, Min(0f)] private float runSpeed = 7f;
 
     // Runtime vars
     private InputAction movementActionInput;
@@ -39,7 +35,6 @@ public class PlayerController : MonoBehaviour
         runningActionInput.Disable();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         InputActionMap inputActionMap = inputActions.FindActionMap("Player");
@@ -51,30 +46,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        HandleMovement();
-        HandleCamera();
+        bool playing = Time.timeScale > 0f;
+        MovementInput = playing ? Vector2.ClampMagnitude(movementActionInput.ReadValue<Vector2>(), 1f) : Vector2.zero;
+        IsRunning = playing && runningActionInput.IsPressed();
     }
 
-    private void HandleMovement()
+    void FixedUpdate()
     {
-        if (movementActionInput == null) return;
-        Vector2 movementInput = movementActionInput.ReadValue<Vector2>();
-        MovementInput = movementInput;
-        IsRunning = runningActionInput.IsPressed();
-
-        float speed = walkSpeed;
-        if (IsRunning)
-        {
-            speed = runSpeed;
-        }
-
-        rb.linearVelocity = movementInput * speed * Time.deltaTime * 100;
-
-        //if (movementInput.magnitude < 0.1f) rb.linearVelocity = Vector2.zero; // Force Stop if no input
-    }
-
-    private void HandleCamera()
-    {
-        if (camera == false) return;
+        // Rigidbody velocity is already measured in world units per second.
+        rb.linearVelocity = MovementInput * (IsRunning ? runSpeed : walkSpeed);
     }
 }

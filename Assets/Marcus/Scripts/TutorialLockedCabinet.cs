@@ -7,7 +7,7 @@ public class TutorialLockedCabinet : MemoryEcho
     [SerializeField] private TutorialMemoryState state;
     [SerializeField] private TutorialVisualStateController visuals;
     [SerializeField] private TutorialUIController tutorialUI;
-    [SerializeField] private float useRange = 0.25f;
+    [SerializeField] private float useRange = 0.2f;
     [Header("Editable cabinet Echo replay")]
     [SerializeField] private TutorialMemoryEcho keyEcho;
     [Tooltip("Unlock pose shown during replay, before the cabinet opens.")]
@@ -21,6 +21,7 @@ public class TutorialLockedCabinet : MemoryEcho
     private readonly CabinetEchoReplay replay = new CabinetEchoReplay();
     private EchoReplayVisual replayImage;
     private Coroutine replayRoutine;
+    private TutorialMemoryEffects.CabinetMotion cabinetMotion;
     [SerializeField] private float useHoldDuration = 0.4f;
     private float holdElapsed;
     private bool holdTriggered;
@@ -83,8 +84,26 @@ public class TutorialLockedCabinet : MemoryEcho
             replayImage = CreateReplayVisual("Cabinet_Key_Echo_Replay", replayPlaceholderSprite, replayHeight);
         Vector3 origin = interactionArea != null ? interactionArea.bounds.center : transform.position;
         origin += (Vector3)replayOffset;
-        yield return PlayReplayVisual(replayImage, origin, replayDuration, () => Blocked);
+        yield return PlayReplayVisual(replayImage, origin, replayDuration, () => Blocked, goldOutline: true);
         while (Blocked) yield return null;
+        if (!state.EchoStored(0)) { replayRoutine = null; replay.Reset(); yield break; }
+
+        if (visuals.openCabinetWithRecorder != null)
+            cabinetMotion = TutorialMemoryEffects.CabinetMotion.Create(transform, GetComponent<SpriteRenderer>(),
+                visuals.openCabinetWithRecorder.GetComponent<SpriteRenderer>());
+        if (cabinetMotion != null)
+        {
+            AudioManager.Instance?.PlayInteraction();
+            for (float time = 0f; time < TutorialMemoryEffects.CabinetMotion.Duration;)
+            {
+                yield return null;
+                if (Blocked) continue;
+                time += Time.deltaTime;
+                cabinetMotion.Draw(time);
+            }
+            ClearCabinetMotion();
+        }
+
         replayRoutine = null;
         if (!state.EchoStored(0) || !replay.Finish()) { replay.Reset(); yield break; }
         visuals.OpenCabinet();
@@ -97,9 +116,16 @@ public class TutorialLockedCabinet : MemoryEcho
     {
         if (replayRoutine != null) StopCoroutine(replayRoutine);
         replayRoutine = null;
+        ClearCabinetMotion();
         replay.Reset();
         holdElapsed = 0f; holdTriggered = false;
         if (replayImage != null) replayImage.ResetVisual();
+    }
+
+    private void ClearCabinetMotion()
+    {
+        cabinetMotion?.Remove();
+        cabinetMotion = null;
     }
     protected override void OnDisable() { base.OnDisable(); ResetReplay(); }
     // E asks Mem for guidance; only the dedicated 1 input replays the stored Echo.

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,8 @@ public class TutorialVisualStateController : MonoBehaviour
     [Header("Study")]
     public GameObject studyFog;
     public bool StudyRestored { get; private set; }
+    private TutorialMemoryEffects.StudyPeel studyPeel;
+    private Coroutine studyPeelRoutine;
 
     void Start()
     {
@@ -65,12 +68,20 @@ public class TutorialVisualStateController : MonoBehaviour
 
     public void RestoreStudy()
     {
+        if (StudyRestored) return;
         StudyRestored = true;
+        if (studyFog == null) return;
+        // The Manual suspends this component's input handling, while the GameObject remains active.
+        if (gameObject.activeInHierarchy)
+            studyPeel = TutorialMemoryEffects.StudyPeel.Create(transform, studyFog.GetComponent<SpriteRenderer>());
+        // Unlock the actual Study immediately. Only the collider-free haze waits for the player to see it.
         studyFog.SetActive(false);
+        if (studyPeel != null) studyPeelRoutine = StartCoroutine(PlayStudyPeel());
     }
 
     public void ResetVisuals()
     {
+        StopStudyPeel();
         StudyRestored = false;
         if (memoryState != null) memoryState.ResetProgress();
         // Cabinet starts closed
@@ -89,4 +100,36 @@ public class TutorialVisualStateController : MonoBehaviour
         // Study starts covered by fog
         studyFog.SetActive(true);
     }
+
+    private IEnumerator PlayStudyPeel()
+    {
+        Camera camera = Camera.main;
+        // A correct reconstruction usually happens with the Manual paused and open.
+        while (Time.deltaTime <= 0f || !studyPeel.DoorwayVisible(camera)) yield return null;
+        for (float time = 0f; time < TutorialMemoryEffects.StudyPeel.Duration;)
+        {
+            yield return null;
+            if (Time.deltaTime <= 0f) continue;
+            time += Time.deltaTime;
+            studyPeel.Draw(time);
+        }
+        studyPeel.Remove();
+        studyPeel = null;
+        studyPeelRoutine = null;
+    }
+
+    private void StopStudyPeel()
+    {
+        if (studyPeelRoutine != null) StopCoroutine(studyPeelRoutine);
+        studyPeelRoutine = null;
+        studyPeel?.Remove();
+        studyPeel = null;
+    }
+
+    private void OnDisable()
+    {
+        if (!gameObject.activeInHierarchy) StopStudyPeel();
+    }
+
+    private void OnDestroy() => StopStudyPeel();
 }

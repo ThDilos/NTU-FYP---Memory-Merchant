@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5830392676248269f8ce9efe16d9ae8, type: 3}
+  m_Name: CharacterStates
+  m_EditorClassIdentifier: Assembly-CSharp::PrologueCharacterStates
+  states:
+  - character: Jade
+    id: idle
+    frames:
+    - {fileID: 2800000, guid: 20c8622fe78da7a48b396de1f7fe39b3, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Jade
+    id: talk
+    frames:
+    - {fileID: 2800000, guid: 32e558061f559c4479505b79bd013d37, type: 3}
+    - {fileID: 2800000, guid: 2030403c11292d04ba0a8295d8829b15, type: 3}
+    framesPerSecond: 6
+    loop: 1
+    returnToIdle: 0
+  - character: Jade
+    id: thinking
+    frames:
+    - {fileID: 2800000, guid: b6a25779dc5a04a4cb893eafa8c71ece, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Jade
+    id: surprised
+    frames:
+    - {fileID: 2800000, guid: 3d8350d08196bc64497c82a761727d65, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Jade
+    id: inspect
+    frames:
+    - {fileID: 2800000, guid: ce96989ae8152164ba782d7faee76e18, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Jade
+    id: receive
+    frames:
+    - {fileID: 2800000, guid: 098bc5560fccbe743a903474305ceff6, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Jade
+    id: reach
+    frames:
+    - {fileID: 2800000, guid: 098bc5560fccbe743a903474305ceff6, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: idle
+    frames:
+    - {fileID: 2800000, guid: 02ada0d30349da046b487c5e28ee6b76, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: talk
+    frames:
+    - {fileID: 2800000, guid: c3764af83455a21449a487c1a87577d9, type: 3}
+    - {fileID: 2800000, guid: 1d43c4f128b92d546a3d20d9ccd0a00d, type: 3}
+    framesPerSecond: 6
+    loop: 1
+    returnToIdle: 0
+  - character: Aunt
+    id: point
+    frames:
+    - {fileID: 2800000, guid: 241a65a6ab7f903419c5617082c780e8, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: reassure
+    frames:
+    - {fileID: 2800000, guid: d2b89a0ba0d66b44bbc6a3ba301c7431, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: explain
+    frames:
+    - {fileID: 2800000, guid: 7e25f598809aa3448ad7ca00e12561ca, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: offer
+    frames:
+    - {fileID: 2800000, guid: 18b415be5afac1043b966650df50d486, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  - character: Aunt
+    id: reach
+    frames:
+    - {fileID: 2800000, guid: 18b415be5afac1043b966650df50d486, type: 3}
+    framesPerSecond: 6
+    loop: 0
+    returnToIdle: 0
+  gestures:
+  - id: nod
+    pose: 
+    framesPerSecond: 8
+    offsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: -1}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    clip: {fileID: 7400000, guid: 669e8ec5eee921442a6352cff918c04c, type: 2}
+  - id: headshake
+    pose: 
+    framesPerSecond: 8
+    offsets:
+    - {x: 0, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    - {x: -1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    clip: {fileID: 7400000, guid: 6a76063ae4378534ea41c0a3dd0f771f, type: 2}
+  - id: hop
+    pose: 
+    framesPerSecond: 8
+    offsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 3}
+    - {x: 0, y: 4}
+    - {x: 0, y: 3}
+    - {x: 0, y: 1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    clip: {fileID: 7400000, guid: 2e1518fc9d03a9e4e8fe5b0b15f4ed15, type: 2}
+  - id: reach
+    pose: reach
+    framesPerSecond: 8
+    offsets:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 2, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    clip: {fileID: 7400000, guid: 4813c542e740f7048a2cebfad9b18a2e, type: 2}
+  - id: listen
+    pose: idle
+    framesPerSecond: 8
+    offsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: -1}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    - {x: 0, y: 0}
+    clip: {fileID: 7400000, guid: 5ded1ab3ce5965b499c48a6271990aad, type: 2}

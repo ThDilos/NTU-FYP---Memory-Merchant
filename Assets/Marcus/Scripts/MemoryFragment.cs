@@ -9,5 +9,9 @@ public class MemoryFragment : Collectible
         PLACE
     }
 
-
+    public override void OnCollect()
+    {
+        base.OnCollect();
+        MemoryCollectionEffects.FragmentCollected(transform);
+    }
 }

@@ -153,7 +153,7 @@ public class TutorialMemoryState : MonoBehaviour
         {
             if (inventory != null) inventory.RemoveEcho(echo);
             if (echo != null) echo.ResetDiscovery();
-            if (echo is TutorialMemoryEcho key) key.ResetPreview();
+            if (echo is TutorialMemoryEcho key) key.ResetPreview(resetFirstReveal: true);
             if (echo is TutorialLockedCabinet cabinet) cabinet.ResetReplay();
         }
         Reconstruction = new SentenceReconstruction(targetOrder);

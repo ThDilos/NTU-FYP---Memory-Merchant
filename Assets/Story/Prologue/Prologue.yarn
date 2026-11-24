@@ -1,5 +1,6 @@
 ﻿title: Prologue
 ---
+<<prologueShot courtyard>>
 <<portrait Character_Image none>>
 On graduation day,...
 
@@ -9,8 +10,10 @@ Classmate: Mum, Dad, let's take another one.
 <<portrait Character_Image JadeSmile_0>>
 Jade: What would it be like if they were also here?
 <<portrait Character_Image none>>
+<<prologueShot conversation>>
 Aunt: Jade! Over here!
 
+<<prologueAct photo>>
 *Tsssk* *Click*
 
 Aunt: Happy graduation! Smile at the camera. Say cheese!
@@ -53,17 +56,19 @@ Jade: I will go.
 <<portrait Character_Image none>>
 Aunt: I can't promise that you'll find all the answers. But it will be a place to start.
 
+<<prologueShot handover>>
+<<prologueAct handover>>
 Aunt: Be careful, Jade.
 <<portrait Character_Image JadeSmile_0>>
 Jade: I will. And thank you, Auntie.
  <<portrait Character_Image none>>
 
-<<fadeOut Fade>>
-<<wait 2>>
-<<fadeIn Fade>>
-<<wait 2>>
+<<prologueShot exterior>>
+<<prologueAct approach>>
 Jade arrives at Memory shop. Using the key her aunt gave her, she unlocks the door.
 
+<<prologueAct unlock>>
+<<prologueShot interior>>
 <<portrait Character_Image JadeSmile_0>>
 Jade: Cough, cough...
 
@@ -73,8 +78,7 @@ Jade: Wow.
 
 Something caught her eyes. 
 
-<<cameraShift machineTarget 0.5>>
-<<cameraKeep>>
+<<prologueAct reveal>>
 
 It was an antique phone. However, its design looks different.
 
@@ -87,5 +91,6 @@ Jade: Should I try dialing it?
 -> Look around
     Jade: Maybe I should look around for more clues first.
 
-<<cameraReturn>>
+<<prologueAct return>>
+<<prologueEnd>>
 ===

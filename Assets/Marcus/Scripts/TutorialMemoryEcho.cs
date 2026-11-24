@@ -22,14 +22,26 @@ public class TutorialMemoryEcho : MemoryEcho
     private Interactor player;
     private float heldTime;
     private bool waitForRelease;
+    private bool hasAnimatedReveal;
     public bool CanCapture => sequence.Current == KeyEchoSequence.Phase.ReadyToCapture && !IsStored;
     public UnityEngine.Sprite ReplayImage => previewSprite != null ? previewSprite : FallbackSprite;
-    public override string InteractionHint => IsStored ? "Echo stored" : "Hold E";
+    public override string InteractionHint
+    {
+        get
+        {
+            if (IsStored) return "Echo stored";
+            if (sequence.Current == KeyEchoSequence.Phase.Idle) return "Hold E to reveal";
+            if (waitForRelease) return "Release E";
+            if (sequence.Current == KeyEchoSequence.Phase.Playing) return "Revealing Echo...";
+            return CanCapture ? "Hold E to capture" : "Hold E to reveal";
+        }
+    }
     public override Vector2 InteractionMarkerPosition => (Vector2)GetComponent<Collider2D>().bounds.center + Vector2.up * 0.22f + interactionMarkerOffset;
     private bool Blocked => Time.timeScale <= 0f || (tutorialUI != null && (tutorialUI.ExternalInputBlocked ||
         ((tutorialUI.manualPanel != null && tutorialUI.manualPanel.activeSelf) ||
          (tutorialUI.settingsPanel != null && tutorialUI.settingsPanel.activeSelf))));
     public override bool IsInteractable => !Blocked && sequence.Current != KeyEchoSequence.Phase.Playing;
+    public override bool CanShowInteractionHint => !Blocked;
     private void Start() => player = FindAnyObjectByType<Interactor>();
     protected new void Update()
     {
@@ -51,15 +63,24 @@ public class TutorialMemoryEcho : MemoryEcho
     {
         if (!IsInteractable || state == null || IsStored || CanCapture) return;
         if (sequence.Current == KeyEchoSequence.Phase.Captured) sequence.Reset();
-        if (sequence.Begin()) animationRoutine = StartCoroutine(PlayPreview());
+        if (sequence.Begin())
+        {
+            waitForRelease = true;
+            animationRoutine = StartCoroutine(PlayPreview());
+        }
     }
     private IEnumerator PlayPreview()
     {
         if (preview == null) preview = CreateReplayVisual("Key_Echo_Preview", ReplayImage, previewHeight);
-        preview.RevealAt(GetComponent<Collider2D>().bounds.center + (Vector3)previewOffset);
+        Vector3 position = GetComponent<Collider2D>().bounds.center + (Vector3)previewOffset;
+        if (hasAnimatedReveal) preview.RevealAt(position);
+        else preview.RevealWithRisingOutline(position);
 
         yield return preview.FadeTo(0.85f, previewDuration, () => Blocked);
-        sequence.FinishPreview(); waitForRelease = true; animationRoutine = null;
+        hasAnimatedReveal = true;
+        sequence.FinishPreview();
+        waitForRelease = Keyboard.current != null && Keyboard.current.eKey.isPressed;
+        animationRoutine = null;
     }
     public override void OnCollect()
     {
@@ -76,10 +97,11 @@ public class TutorialMemoryEcho : MemoryEcho
         }
         animationRoutine = null;
     }
-    public void ResetPreview()
+    public void ResetPreview(bool resetFirstReveal = false)
     {
         if (animationRoutine != null) StopCoroutine(animationRoutine);
         animationRoutine = null; sequence.Reset(); heldTime = 0f; waitForRelease = true;
+        if (resetFirstReveal) hasAnimatedReveal = false;
         if (preview != null) preview.ResetVisual();
     }
     protected override void OnDisable()
